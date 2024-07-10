@@ -1,0 +1,4 @@
+[submodule "libraries"]
+	path = libraries
+	url = git@github.com:Dygmalab/NeuronWirelessLibs.git
+	branch = of-common_libraries
