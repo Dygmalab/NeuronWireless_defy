@@ -2,7 +2,7 @@
 # Application name (project name)
 #-------------------------------------------------------------------------------
 
-APP_NAME = Wireless_neuron
+APP_NAME = NeuronWireless_defy
 
 #-------------------------------------------------------------------------------
 # Common, platform and project root directories
