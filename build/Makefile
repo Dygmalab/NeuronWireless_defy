@@ -33,8 +33,8 @@ SDK_NRF5_SDK_ROOT_DIR = $(SDK_ROOT_DIR)/$(NRF5_SDK)/
 KALEIDOSCOPE_ROOT_DIR = $(LIB_ROOT_DIR)/Kaleidoscope/
 KEYBOARDIO_HID_ROOT_DIR = $(LIB_ROOT_DIR)/KeyboardioHID/
 
-# Utils root directory
-UTILS_ROOT_DIR = $(COMMON_ROOT_DIR)/utils/
+# Tools root directory
+TOOLS_ROOT_DIR = $(LIB_ROOT_DIR)/tools/
 
 #-------------------------------------------------------------------------------
 # Include common definitions
@@ -158,6 +158,9 @@ LIBDIR += -L./init/device/$(TARGET_MCU_DIR_NAME)
 
 # Application project
 INCDIR += -I$(APP_ROOT_DIR)/
+INCDIR += -I$(APP_ROOT_DIR)/src/
+INCDIR += -I$(APP_ROOT_DIR)/src/version/
+
 INCDIR += -I$(LIB_ROOT_DIR)/
 INCDIR += -I$(LIB_ROOT_DIR)/Ble_composite_dev/
 INCDIR += -I$(LIB_ROOT_DIR)/Communications/src/
@@ -243,14 +246,17 @@ INCDIR += -I$(SDK_NRF5_SDK_ROOT_DIR)/modules/nrfx/mdk/
 #-------------------------------------------------------------------------------
 # Application project
 SRCSC += $(wildcard $(APP_ROOT_DIR)/*.c)
+SRCSC += $(wildcard $(APP_ROOT_DIR)/src/*.c)
+SRCSC += $(wildcard $(APP_ROOT_DIR)/src/version/*.c)
 SRCSCXX += $(wildcard $(APP_ROOT_DIR)/*.cpp)
+SRCSCXX += $(wildcard $(APP_ROOT_DIR)/src/*.cpp)
+SRCSCXX += $(wildcard $(APP_ROOT_DIR)/src/version/*.cpp)
 
 SRCSC += $(LIB_ROOT_DIR)/Ble_composite_dev/Ble_composite_dev.c
 SRCSC += $(LIB_ROOT_DIR)/Ble_composite_dev/ble_hid_service.c
 SRCSC += $(LIB_ROOT_DIR)/rf_host_device/rf_host_device_api.c
 SRCSC += $(LIB_ROOT_DIR)/Time_counter/Time_counter.c
 
-SRCSCXX += $(LIB_ROOT_DIR)/DefyFirmwareVersion.cpp
 SRCSCXX += $(LIB_ROOT_DIR)/Fifo_buffer/Fifo_buffer.cpp
 SRCSCXX += $(LIB_ROOT_DIR)/EEPROM/EEPROM.cpp
 SRCSCXX += $(LIB_ROOT_DIR)/NeuronLedLibrary/Colormap-Defy.cpp
@@ -424,7 +430,7 @@ $(BINARY_OUTPUT): $(OBJSC) $(OBJSCXX) $(OBJSA) $(OBJSa)
 	$(OBJCOPY) -O binary $@.elf $@.bin
 	$(OBJCOPY) -O ihex $@.elf $@.hex
 	@echo "Creating final application binary ..."
-	python $(UTILS_ROOT_DIR)/fw_package_builder.py $(RF_HOST_DEVICE_HEX) $@.hex $@_final.hex
+	python $(TOOLS_ROOT_DIR)/fw_package_builder.py $(RF_HOST_DEVICE_HEX) $@.hex $@_final.hex
 	@echo "Creating application binaries done."
 
 clean:
