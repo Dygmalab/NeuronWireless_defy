@@ -509,27 +509,6 @@ void reset_mcu(void)
     }
 }
 
-/*
- * This function is called when the USB is connected or disconnected.
- * For the moment it only logs the event.
- * We will use it to decide if we send the disconnect message to the host. Or not.
- */
-void check_usb_connection() {
-    static bool usb_connected = false;
-
-    if (tud_ready() != usb_connected)
-    {
-        usb_connected = tud_ready();
-        if (usb_connected)
-        {
-            NRF_LOG_INFO("USB connected");
-        }
-        else
-        {
-            NRF_LOG_INFO("USB not connected");
-        }
-    }
-}
 
 void yield(void)
 {
@@ -548,8 +527,6 @@ void yield(void)
 #ifdef USE_TINYUSB
     HID().SendLastReport();
     TinyUSB_Device_Task();
-
-    check_usb_connection();
 #endif
 
     if(ble_innited() && FirmwareVersion.keyboard_is_wireless())
