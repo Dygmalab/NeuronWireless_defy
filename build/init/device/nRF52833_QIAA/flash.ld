@@ -26,6 +26,7 @@ GROUP(-lgcc -lc -lnosys)
 MEMORY
 {  
   FLASH (rx) : ORIGIN = 0x2E000, LENGTH = 0x44000
+  /*FLASH (rx) : ORIGIN = 0x2E000, LENGTH = 0x4D000       /* No bootloader */
   RAM (rwx) :  ORIGIN = 0x20009400, LENGTH = 0x16C00    /* s140 + rf_host_lib */  
 }
 
