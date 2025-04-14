@@ -397,6 +397,7 @@ SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope_internal/device.cpp
 SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope_internal/LEDModeManager.cpp
 
 SRCSCXX += $(LIB_ROOT_DIR)/Communications/src/device/defyN2/CommunicationsN2.cpp
+SRCSCXX += $(LIB_ROOT_DIR)/Communications/src/device/defyN2/Communications_side.cpp
 SRCSCXX += $(LIB_ROOT_DIR)/Communications/src/Communications_protocol_rf.cpp
 
 # Keyboardio HID
