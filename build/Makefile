@@ -402,6 +402,7 @@ SRCSCXX += $(LIB_ROOT_DIR)/Communications/src/device/defyN2/com_models/Communica
 SRCSCXX += $(LIB_ROOT_DIR)/Communications/src/device/defyN2/com_models/Communication_model_ble.cpp
 SRCSCXX += $(LIB_ROOT_DIR)/Communications/src/device/defyN2/com_models/Communication_model_rf.cpp
 SRCSCXX += $(LIB_ROOT_DIR)/Communications/src/device/defyN2/com_models/Communication_model_wired.cpp
+SRCSCXX += $(LIB_ROOT_DIR)/Communications/src/device/defyN2/Communications_rf_pipe.cpp
 SRCSCXX += $(LIB_ROOT_DIR)/Communications/src/device/defyN2/Communications_side.cpp
 SRCSCXX += $(LIB_ROOT_DIR)/Communications/src/device/defyN2/CommunicationsN2.cpp
 
