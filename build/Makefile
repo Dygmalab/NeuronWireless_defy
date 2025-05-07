@@ -170,8 +170,9 @@ INCDIR += -I$(APP_ROOT_DIR)/src/version/
 INCDIR += -I$(LIB_ROOT_DIR)/
 INCDIR += -I$(LIB_ROOT_DIR)/Ble_composite_dev/
 INCDIR += -I$(LIB_ROOT_DIR)/Communications/src/
-INCDIR += -I$(LIB_ROOT_DIR)/Communications/src/device/defyN2/
-INCDIR += -I$(LIB_ROOT_DIR)/Communications/src/device/defyN2/com_models/
+INCDIR += -I$(LIB_ROOT_DIR)/Communications/src/device/neuron/common/
+INCDIR += -I$(LIB_ROOT_DIR)/Communications/src/device/neuron/defyN2/
+INCDIR += -I$(LIB_ROOT_DIR)/Communications/src/device/neuron/defyN2/com_models/
 INCDIR += -I$(LIB_ROOT_DIR)/Fifo_buffer/
 INCDIR += -I$(LIB_ROOT_DIR)/EEPROM/
 INCDIR += -I$(LIB_ROOT_DIR)/NeuronLedLibrary/
@@ -398,13 +399,14 @@ SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/Runtime.cpp
 SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope_internal/device.cpp
 SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope_internal/LEDModeManager.cpp
 
-SRCSCXX += $(LIB_ROOT_DIR)/Communications/src/device/defyN2/com_models/Communication_model.cpp
-SRCSCXX += $(LIB_ROOT_DIR)/Communications/src/device/defyN2/com_models/Communication_model_ble.cpp
-SRCSCXX += $(LIB_ROOT_DIR)/Communications/src/device/defyN2/com_models/Communication_model_rf.cpp
-SRCSCXX += $(LIB_ROOT_DIR)/Communications/src/device/defyN2/com_models/Communication_model_wired.cpp
-SRCSCXX += $(LIB_ROOT_DIR)/Communications/src/device/defyN2/Communications_rf_pipe.cpp
-SRCSCXX += $(LIB_ROOT_DIR)/Communications/src/device/defyN2/Communications_side.cpp
-SRCSCXX += $(LIB_ROOT_DIR)/Communications/src/device/defyN2/CommunicationsN2.cpp
+SRCSCXX += $(LIB_ROOT_DIR)/Communications/src/device/neuron/common/Communication_model.cpp
+SRCSCXX += $(LIB_ROOT_DIR)/Communications/src/device/neuron/common/Communications_side.cpp
+SRCSCXX += $(LIB_ROOT_DIR)/Communications/src/device/neuron/defyN2/com_models/Communication_model_ble.cpp
+SRCSCXX += $(LIB_ROOT_DIR)/Communications/src/device/neuron/defyN2/com_models/Communication_model_rf.cpp
+SRCSCXX += $(LIB_ROOT_DIR)/Communications/src/device/neuron/defyN2/com_models/Communication_model_wired.cpp
+SRCSCXX += $(LIB_ROOT_DIR)/Communications/src/device/neuron/defyN2/Communications_rf_pipe.cpp
+SRCSCXX += $(LIB_ROOT_DIR)/Communications/src/device/neuron/defyN2/CommunicationsN2.cpp
+SRCSCXX += $(LIB_ROOT_DIR)/Communications/src/device/neuron/defyN2/CommunicationsN2_side.cpp
 
 SRCSCXX += $(LIB_ROOT_DIR)/Communications/src/Communications_protocol_rf.cpp
 
