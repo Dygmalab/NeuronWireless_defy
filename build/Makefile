@@ -170,6 +170,9 @@ INCDIR += -I$(APP_ROOT_DIR)/src/version/
 INCDIR += -I$(LIB_ROOT_DIR)/
 INCDIR += -I$(LIB_ROOT_DIR)/Ble_composite_dev/
 INCDIR += -I$(LIB_ROOT_DIR)/Communications/src/
+INCDIR += -I$(LIB_ROOT_DIR)/Communications/src/device/neuron/common/
+INCDIR += -I$(LIB_ROOT_DIR)/Communications/src/device/neuron/defyN2/
+INCDIR += -I$(LIB_ROOT_DIR)/Communications/src/device/neuron/defyN2/com_models/
 INCDIR += -I$(LIB_ROOT_DIR)/Fifo_buffer/
 INCDIR += -I$(LIB_ROOT_DIR)/EEPROM/
 INCDIR += -I$(LIB_ROOT_DIR)/NeuronLedLibrary/
@@ -268,7 +271,7 @@ SRCSC += $(wildcard $(APP_ROOT_DIR)/src/*.c)
 SRCSCXX += $(wildcard $(APP_ROOT_DIR)/*.cpp)
 SRCSCXX += $(wildcard $(APP_ROOT_DIR)/src/*.cpp)
 
-SRCSCXX += $(wildcard $(APP_ROOT_DIR)/src/version/DefyFirmwareVersion.cpp)
+SRCSCXX += $(wildcard $(APP_ROOT_DIR)/src/version/FirmwareVersion.cpp)
 
 SRCSC += $(LIB_ROOT_DIR)/Ble_composite_dev/Ble_composite_dev.c
 SRCSC += $(LIB_ROOT_DIR)/Ble_composite_dev/ble_hid_service.c
@@ -396,7 +399,15 @@ SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/Runtime.cpp
 SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope_internal/device.cpp
 SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope_internal/LEDModeManager.cpp
 
-SRCSCXX += $(LIB_ROOT_DIR)/Communications/src/device/defyN2/CommunicationsN2.cpp
+SRCSCXX += $(LIB_ROOT_DIR)/Communications/src/device/neuron/common/Communication_model.cpp
+SRCSCXX += $(LIB_ROOT_DIR)/Communications/src/device/neuron/common/Communications_side.cpp
+SRCSCXX += $(LIB_ROOT_DIR)/Communications/src/device/neuron/defyN2/com_models/Communication_model_ble.cpp
+SRCSCXX += $(LIB_ROOT_DIR)/Communications/src/device/neuron/defyN2/com_models/Communication_model_rf.cpp
+SRCSCXX += $(LIB_ROOT_DIR)/Communications/src/device/neuron/defyN2/com_models/Communication_model_wired.cpp
+SRCSCXX += $(LIB_ROOT_DIR)/Communications/src/device/neuron/defyN2/Communications_rf_pipe.cpp
+SRCSCXX += $(LIB_ROOT_DIR)/Communications/src/device/neuron/defyN2/CommunicationsN2.cpp
+SRCSCXX += $(LIB_ROOT_DIR)/Communications/src/device/neuron/defyN2/CommunicationsN2_side.cpp
+
 SRCSCXX += $(LIB_ROOT_DIR)/Communications/src/Communications_protocol_rf.cpp
 
 # Keyboardio HID
@@ -416,13 +427,13 @@ SRCSCXX += $(KEYBOARDIO_HID_ROOT_DIR)/src/HIDReportObserver.cpp
 DEFINES += -DCOMPILE_DEFY_KEYBOARD=1
 
 # Defy Neuron version
-DEFINES += -DDEFY_NEURON_FW_VERSION=\"v2.0.0\"
+DEFINES += -DDEFY_NEURON_FW_VERSION=\"v2.1.0-beta.4\"
 
 # Defy firmware package version - Neuron + Keyscanner + RFGW
 ifdef DEFY_FW_VERSION
     DEFINES += -DDEFY_FW_VERSION=\"${DEFY_FW_VERSION}\"
 else
-    DEFINES += -DDEFY_FW_VERSION=\"v2.0.0\"			# Fixed value to be used until we have proper GitHub build system
+    DEFINES += -DDEFY_FW_VERSION=\"v2.1.0\"			# Fixed value to be used until we have proper GitHub build system
 endif
 
 DEFINES += -DBOARD_VENDORID=0x35EF

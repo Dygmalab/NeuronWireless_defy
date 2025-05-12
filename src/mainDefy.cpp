@@ -68,7 +68,7 @@ extern "C"
 #include "Kaleidoscope.h"
 // #include "RaiseIdleLEDs.h"
 
-#include "DefyFirmwareVersion.h"
+#include "FirmwareVersion.h"
 #include "kaleidoscope/device/dygma/KeyboardManager/universalModules/Focus.h"
 
 // Support for host power management (suspend & wakeup)
@@ -509,6 +509,7 @@ void reset_mcu(void)
     }
 }
 
+
 void yield(void)
 {
     watchdog_timer.reset();
@@ -528,7 +529,7 @@ void yield(void)
     TinyUSB_Device_Task();
 #endif
 
-    if(ble_innited())
+    if(ble_innited() && FirmwareVersion.keyboard_is_wireless())
     {
         ble_run();
     }
