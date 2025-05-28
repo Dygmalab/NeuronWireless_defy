@@ -427,7 +427,7 @@ SRCSCXX += $(KEYBOARDIO_HID_ROOT_DIR)/src/HIDReportObserver.cpp
 DEFINES += -DCOMPILE_DEFY_KEYBOARD=1
 
 # Defy Neuron version
-DEFINES += -DDEFY_NEURON_FW_VERSION=\"v2.1.0-beta.6\"
+DEFINES += -DDEFY_NEURON_FW_VERSION=\"v2.1.0-beta.7\"
 
 # Defy firmware package version - Neuron + Keyscanner + RFGW
 ifdef DEFY_FW_VERSION
