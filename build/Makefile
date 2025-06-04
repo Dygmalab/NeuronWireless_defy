@@ -427,13 +427,13 @@ SRCSCXX += $(KEYBOARDIO_HID_ROOT_DIR)/src/HIDReportObserver.cpp
 DEFINES += -DCOMPILE_DEFY_KEYBOARD=1
 
 # Defy Neuron version
-DEFINES += -DDEFY_NEURON_FW_VERSION=\"v2.1.0-beta.7\"
+DEFINES += -DDEFY_NEURON_FW_VERSION=\"v2.1.0\"
 
 # Defy firmware package version - Neuron + Keyscanner + RFGW
 ifdef DEFY_FW_VERSION
     DEFINES += -DDEFY_FW_VERSION=\"${DEFY_FW_VERSION}\"
 else
-    DEFINES += -DDEFY_FW_VERSION=\"v2.1.0-beta.8\"			# Fixed value to be used until we have proper GitHub build system
+    DEFINES += -DDEFY_FW_VERSION=\"v2.1.0\"			# Fixed value to be used until we have proper GitHub build system
 endif
 
 DEFINES += -DBOARD_VENDORID=0x35EF
