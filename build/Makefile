@@ -30,7 +30,8 @@ SDK_ROOT_DIR = $(LIB_ROOT_DIR)/SDK/
 SDK_NRF5_SDK_ROOT_DIR = $(SDK_ROOT_DIR)/$(NRF5_SDK)/
 
 # Kaleidoscope root directory
-KALEIDOSCOPE_ROOT_DIR = $(LIB_ROOT_DIR)/Kaleidoscope/
+KALEIDOSCOPE_ADAPTER_ROOT_DIR = $(LIB_ROOT_DIR)/kaleidoscope_adapter/
+KALEIDOSCOPE_ROOT_DIR = $(KALEIDOSCOPE_ADAPTER_ROOT_DIR)/kaleidoscope/
 KEYBOARDIO_HID_ROOT_DIR = $(LIB_ROOT_DIR)/KeyboardioHID/
 
 # Tools root directory
