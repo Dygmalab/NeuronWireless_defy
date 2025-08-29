@@ -29,76 +29,80 @@ extern "C"
 {
 #endif
 
-#include "nordic_common.h"
-#include "nrf.h"
-#include "nrf_assert.h"
-#include "nrf_drv_clock.h"
-#include "nrf_drv_power.h"
+//#include "nordic_common.h"
+//#include "nrf.h"
+//#include "nrf_assert.h"
+//#include "nrf_drv_clock.h"
+//#include "nrf_drv_power.h"
+#include "nrf_fstorage.h"
 #include "nrf_sdm.h"
 
-#include "app_error.h"
-#include "app_timer.h"
-#include "nrf_delay.h"
+//#include "app_error.h"
+//#include "app_timer.h"
+//#include "nrf_delay.h"
 #include "nrf_gpio.h"
 
-// UART debug log
-#include "nrf_log.h"
-#include "nrf_log_ctrl.h"
-#include "nrf_log_default_backends.h"
+//// UART debug log
+//#include "nrf_log.h"
+//#include "nrf_log_ctrl.h"
+//#include "nrf_log_default_backends.h"
 
 #ifdef __cplusplus
 }
 #endif
-#include "Arduino.h"
+//#include "Arduino.h"
 #include "EEPROM.h"
 #include "Watchdog_timer.h"
 #include "common.h"
 
 // Kaleidoscope
-#include "Kaleidoscope-Colormap.h"
+//#include "Kaleidoscope-Colormap.h"
 #include "Kaleidoscope-DynamicMacros.h"
 #include "Kaleidoscope-DynamicSuperKeys.h"
 #include "Kaleidoscope-EEPROM-Keymap.h"
-#include "Kaleidoscope-FocusSerial.h"
-#include "Kaleidoscope-IdleLEDsDefy.h"
-#include "Kaleidoscope-LayerFocus.h"
+//#include "Kaleidoscope-FocusSerial.h"
+//#include "Kaleidoscope-IdleLEDsDefy.h"
+//#include "Kaleidoscope-LayerFocus.h"
+#include "Kaleidoscope-LEDControl.h"
 #include "Kaleidoscope-MagicCombo.h"
-#include "Kaleidoscope-MouseKeys.h"
+//#include "Kaleidoscope-MouseKeys.h"
 #include "Kaleidoscope-USB-Quirks.h"
-#include "Kaleidoscope.h"
-// #include "RaiseIdleLEDs.h"
-
-#include "FirmwareVersion.h"
-#include "kaleidoscope/device/dygma/keyboardManager/universalModules/Focus.h"
+//#include "Kaleidoscope.h"
+//// #include "RaiseIdleLEDs.h"
+//
+//#include "kaleidoscope/device/dygma/keyboardManager/universalModules/Focus.h"
 
 // Support for host power management (suspend & wakeup)
 #include "Kaleidoscope-HostPowerManagement.h"
 
-#include "Kaleidoscope-OneShot.h"
-#include "Kaleidoscope-Qukeys.h"
-
-// #include "LED-CapsLockLight.h"
+//#include "Kaleidoscope-OneShot.h"
+//#include "Kaleidoscope-Qukeys.h"
+//
+//// #include "LED-CapsLockLight.h"
 
 // LED effects
 #include "Colormap-Defy.h"
-#include "LED-Palette-Theme-Defy.h"
-#include "LEDEffect-BatteryStatus-Defy.h"
-#include "LEDEffect-Bluetooth-Pairing-Defy.h"
-#include "LEDEffect-Breathe-Defy.h"
-#include "LEDEffect-Rainbow-Defy.h"
-#include "LEDEffect-SolidColor-Defy.h"
-#include "LEDEffect-Stalker-Defy.h"
-// #include "DefaultColormap.h"
-
-#include "Battery.h"
-#include "Ble_composite_dev.h"
-#include "Ble_manager.h"
+//#include "LED-Palette-Theme-Defy.h"
+//#include "LEDEffect-BatteryStatus-Defy.h"
+//#include "LEDEffect-Bluetooth-Pairing-Defy.h"
+//#include "LEDEffect-Breathe-Defy.h"
+//#include "LEDEffect-Rainbow-Defy.h"
+//#include "LEDEffect-SolidColor-Defy.h"
+//#include "LEDEffect-Stalker-Defy.h"
+//// #include "DefaultColormap.h"
+//
+//#include "Battery.h"
+//#include "Ble_composite_dev.h"
+//#include "Ble_manager.h"
 #include "Communications.h"
-#include "Radio_manager.h"
-#include "Upgrade.h"
-#include "nrf_fstorage.h"
+#include "FirmwareVersion.h"
+//#include "Radio_manager.h"
+//#include "Upgrade.h"
 #include "rf_host_device_api.h"
-#include <Adafruit_TinyUSB.h>
+//#include <Adafruit_TinyUSB.h>
+
+// Keyboard
+#include "kbd_base.h"
 
 #if !COMPILE_FOR_NEURON_2_HARDWARE_V1_0 && !COMPILE_FOR_NEURON_2_HARDWARE_V1_1
 #warning "<<<<<<<<< The project is not being built for production >>>>>>>>>"
@@ -107,8 +111,6 @@ extern "C"
 
 Watchdog_timer watchdog_timer;
 
-
-// clang-format off
 /*lint -save -e14 */
 void app_error_fault_handler(uint32_t id, uint32_t pc, uint32_t info)  // On assert, the system can only recover with a reset.
 {
@@ -206,63 +208,6 @@ namespace std
         while (1);
     };
 }
-// clang-format on
-
-// Kaleidoscope
-enum
-{
-    QWERTY,
-    NUMPAD,
-    _LAYER_MAX
-}; // layers
-
-/*
-    This comments temporarily turns off astyle's indent enforcement so we can make
-    the keymaps actually resemble the physical key layout better
-*/
-// clang-format off
-KEYMAPS
-(
-    [QWERTY] = KEYMAP_STACKED
-    (
-        /* Left Side */
-        Key_Escape, Key_1, Key_2, Key_3, Key_4, Key_5, Key_6,
-        Key_Tab, Key_Q, Key_W, Key_E, Key_R, Key_T, Consumer_VolumeIncrement,
-        Key_CapsLock, Key_A, Key_S, Key_D, Key_F, Key_G, Consumer_VolumeDecrement,
-        Key_Backslash, Key_Z, Key_X, Key_C, Key_V, Key_B,
-        Key_LeftControl, Key_LeftGui, Key_Backspace, Key_Delete,
-        Key_LeftShift, Key_LeftAlt, Key_Enter, Key_Space,
-
-        /* Right Side */
-        Key_7, Key_8, Key_9, Key_0, Key_Minus, Key_Equals, Key_Backspace,
-        Key_Y, Key_U, Key_I, Key_O, Key_P, Key_LeftBracket, Key_RightBracket,
-        Key_H, Key_J, Key_K, Key_L, Key_Semicolon, Key_Quote, Key_RightShift,
-        Key_N, Key_M, Key_Comma, Key_Period, Key_Slash, Key_RightShift,
-        Key_LEDEffectNext, Key_Home, Key_UpArrow, Key_End,
-        Key_RightArrow, Key_DownArrow, Key_LeftArrow, Key_Enter
-    ),
-
-    [NUMPAD] = KEYMAP_STACKED
-    (
-        /* Left Side */
-        Key_Escape, Key_F1, Key_F2, Key_F3, Key_F4, Key_F5, Key_F6,
-        Key_Tab, Key_NoKey, Key_UpArrow, Key_NoKey, Key_NoKey, Key_NoKey, Key_NoKey,
-        Key_CapsLock, Key_LeftArrow, Key_DownArrow, Key_RightArrow, Key_NoKey, Key_NoKey, Key_NoKey,
-        Key_LeftShift, Key_Backslash, Key_NoKey, Key_NoKey, Key_NoKey, Key_NoKey,
-        Key_LeftControl, Key_LeftGui, Key_LeftAlt, Key_Space,
-        Key_Space, Key_Backspace, Key_Enter, Key_Delete,
-
-        /* Right Side */
-        Key_F7, Key_F8, Key_F9, Key_F10, Key_F11, Key_F12, Key_Backspace,
-        Key_KeypadSubtract, Key_7, Key_8, Key_9, Key_KeypadDivide, Key_NoKey, Key_Enter,
-        Key_KeypadAdd, Key_4, Key_5, Key_6, Key_KeypadMultiply, Key_NoKey, Key_Backslash,
-        Key_KeypadDot, Key_1, Key_2, Key_3, Key_UpArrow, Key_RightShift,
-        Key_0, Key_Space, Key_LeftArrow, Key_DownArrow,
-        Key_RightArrow, Key_RightControl, Key_Delete, MoveToLayer(QWERTY)
-    )
-);
-/* Re-enable astyle's indent enforcement */
-// clang-format on
 
 /** toggleLedsOnSuspendResume toggles the LEDs off when the host goes to sleep,
  * and turns them back on when it wakes up.
@@ -327,40 +272,11 @@ static void protocolBreathe()
     ::LEDControl.syncLeds();
 }
 
-// clang-format off
 USE_MAGIC_COMBOS(
 {.action = toggleKeyboardProtocol,
 // Left Ctrl + Left Shift + Left Alt + 6
 .keys = {R4C0, R3C0, R4C2, R0C6}}
 );
-// clang-format on
-
-// kaleidoscope::plugin::EEPROMPadding JointPadding(8);
-static kaleidoscope::plugin::LEDSolidColorDefy solidRedDefy(255, 0, 0, 0);
-static kaleidoscope::plugin::LEDSolidColorDefy solidGreenDefy(0, 255, 0, 0);
-static kaleidoscope::plugin::LEDSolidColorDefy solidBlueDefy(0, 0, 255, 0);
-static kaleidoscope::plugin::LEDSolidColorDefy solidWhiteDefy(0, 0, 0, 255);
-static kaleidoscope::plugin::LEDSolidColorDefy solidBlackDefy(0, 0, 0, 0);
-static kaleidoscope::plugin::LEDBatteryStatusDefy batteryStatus{};
-static kaleidoscope::plugin::LEDStalkerDefy stalkerDefy{};
-
-// clang-format off
-KALEIDOSCOPE_INIT_PLUGINS
-(
-    EEPROMSettings,
-    EEPROMKeymap, FirmwareVersion, FocusSettingsCommand, FocusEEPROMCommand, Upgrade,DynamicSuperKeys,
-    LEDControl, FocusLEDCommand,
-    LEDPaletteThemeDefy, ColormapEffectDefy,
-    LEDRainbowWaveEffectDefy, LEDRainbowEffectDefy, stalkerDefy, solidRedDefy,
-    solidGreenDefy, solidBlueDefy, solidWhiteDefy, solidBlackDefy, batteryStatus,ledBluetoothPairingDefy,
-    IdleLEDsDefy,PersistentIdleDefyLEDs, KeyboardFocus, Qukeys, DynamicMacros,
-    /*SideFlash,*/ Focus, MouseKeys, OneShot, LayerFocus,
-    HostPowerManagement,Battery,
-    /*BLE*/
-    RadioManager, _BleManager
-);
-// clang-format on
-// End Kaleidoscope
 
 static void gpio_output_voltage_setup(void);
 static void init_gpio(void);
@@ -369,6 +285,8 @@ void yield(void);
 
 void setup(void)
 {
+    result_t result;
+
     // RF Host library
     rfhdev_api_init();
 
@@ -390,8 +308,11 @@ void setup(void)
     // Initialize the communications before Kaleidoscope to make sure the correct order of the incoming message processing
     Communications.init();
 
+    // Keyboard
+    result = kbd_base_init();
+    ASSERT_DYGMA( result == RESULT_OK, "kbd_base_init failed!" );
+
     // Kaleidoscope
-    Kaleidoscope.setup();
     EEPROMKeymap.setup(10);            // Reserve space in the keyboard's EEPROM(flash memory) for the keymaps.
     ColormapEffectDefy.max_layers(10); // Reserve space for the number of Colormap layers we will use.
     // DefaultColormap.setup();
@@ -400,6 +321,8 @@ void setup(void)
 
     // Keep the HID begin after the Kaleidoscope setup.
     HID().begin();
+
+    UNUSED( result );
 }
 
 void loop()

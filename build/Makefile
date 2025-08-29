@@ -32,6 +32,9 @@ SDK_NRF5_SDK_ROOT_DIR = $(SDK_ROOT_DIR)/$(NRF5_SDK)/
 # Kaleidoscope root directory
 KALEIDOSCOPE_ADAPTER_ROOT_DIR = $(LIB_ROOT_DIR)/kaleidoscope_adapter/
 KALEIDOSCOPE_ROOT_DIR = $(KALEIDOSCOPE_ADAPTER_ROOT_DIR)/kaleidoscope/
+
+KEYBOARD_API_ROOT_DIR = $(KALEIDOSCOPE_ADAPTER_ROOT_DIR)/keyboard_api/
+
 KEYBOARDIO_HID_ROOT_DIR = $(LIB_ROOT_DIR)/KeyboardioHID/
 
 # Tools root directory
@@ -209,7 +212,15 @@ INCDIR += -I$(LIB_ROOT_DIR)/NRf_platform/middleware/
 INCDIR += -I$(LIB_ROOT_DIR)/NRf_platform/middleware/halsep/
 INCDIR += -I$(LIB_ROOT_DIR)/NRf_platform/middleware/memory/
 
-# Kaleidoscope
+# Kaleidoscope Adapter
+INCDIR += -I$(KEYBOARD_API_ROOT_DIR)/
+INCDIR += -I$(KEYBOARD_API_ROOT_DIR)/falsep/
+
+INCDIR += -I$(KALEIDOSCOPE_ADAPTER_ROOT_DIR)/
+INCDIR += -I$(KALEIDOSCOPE_ADAPTER_ROOT_DIR)/fal/
+INCDIR += -I$(KALEIDOSCOPE_ADAPTER_ROOT_DIR)/fal/ll/
+INCDIR += -I$(KALEIDOSCOPE_ADAPTER_ROOT_DIR)/fal/public/
+
 INCDIR += -I$(KALEIDOSCOPE_ROOT_DIR)/src/
 INCDIR += -I$(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/device/dygma/
 INCDIR += -I$(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/device/dygma/keyboardManager
@@ -374,6 +385,13 @@ SRCSC += $(SDK_NRF5_SDK_ROOT_DIR)/modules/nrfx/drivers/src/nrfx_uart.c
 SRCSC += $(SDK_NRF5_SDK_ROOT_DIR)/modules/nrfx/drivers/src/nrfx_uarte.c
 SRCSC += $(wildcard $(SDK_NRF5_SDK_ROOT_DIR)/components/libraries/log/src/*.c)
 
+# Keyboard API
+SRCSC += $(KEYBOARD_API_ROOT_DIR)/falsep/kbd_base.c
+
+# Kaleidoscope FAL (Framework Abstraction Layer)
+SRCSCXX += $(KALEIDOSCOPE_ADAPTER_ROOT_DIR)/fal/ll/kbdfal_ll_base.cpp
+
+# Kaleidoscope
 SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/device/dygma/keyboardManager/universalModules/bootloader_util.cpp
 SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/device/dygma/keyboardManager/universalModules/Hand.cpp
 SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/device/dygma/keyboardManager/universalModules/Focus.cpp
