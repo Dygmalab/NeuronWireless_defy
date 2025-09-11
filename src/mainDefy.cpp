@@ -57,7 +57,7 @@ extern "C"
 // Kaleidoscope
 #include "Kaleidoscope-Colormap.h"
 #include "Kaleidoscope-DynamicMacros.h"
-#include "Kaleidoscope-SuperkeysHandler.h"
+#include "Kaleidoscope-KeyRoleManager.h"
 #include "Kaleidoscope-EEPROM-Keymap.h"
 #include "Kaleidoscope-FocusSerial.h"
 #include "Kaleidoscope-IdleLEDsDefy.h"
@@ -348,7 +348,7 @@ static kaleidoscope::plugin::LEDStalkerDefy stalkerDefy{};
 KALEIDOSCOPE_INIT_PLUGINS
 (
     EEPROMSettings,
-    EEPROMKeymap, FirmwareVersion, FocusSettingsCommand, FocusEEPROMCommand, Upgrade, SuperkeysHandler,
+    EEPROMKeymap, FirmwareVersion, FocusSettingsCommand, FocusEEPROMCommand, Upgrade,KeyRoleManager,
     LEDControl, FocusLEDCommand,
     LEDPaletteThemeDefy, ColormapEffectDefy,
     LEDRainbowWaveEffectDefy, LEDRainbowEffectDefy, stalkerDefy, solidRedDefy,
@@ -395,7 +395,8 @@ void setup(void)
     EEPROMKeymap.setup(10);            // Reserve space in the keyboard's EEPROM(flash memory) for the keymaps.
     ColormapEffectDefy.max_layers(10); // Reserve space for the number of Colormap layers we will use.
     // DefaultColormap.setup();
-    SuperkeysHandler.setup(); // Initialize the SuperkeysHandler plugin.
+    //SuperkeysHandler.setup(); // Initialize the SuperkeysHandler plugin.
+    KeyRoleManager.setup_superkeys();   // Initialize the KeyRoleManager plugin.
     DynamicMacros.reserve_storage(2048);
 
     // Keep the HID begin after the Kaleidoscope setup.
