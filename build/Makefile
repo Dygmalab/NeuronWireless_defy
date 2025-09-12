@@ -438,7 +438,7 @@ DEFINES += -DDEFY_NEURON_FW_VERSION=\"v2.1.1\"
 ifdef DEFY_FW_VERSION
     DEFINES += -DDEFY_FW_VERSION=\"${DEFY_FW_VERSION}\"
 else
-    DEFINES += -DDEFY_FW_VERSION=\"v2.1.1-alpha\"			# Fixed "alpha" value to recognize local builds
+    DEFINES += -DDEFY_FW_VERSION=\"v2.2.0-alpha\"			# Fixed "alpha" value to recognize local builds
 endif
 
 DEFINES += -DBOARD_VENDORID=0x35EF
