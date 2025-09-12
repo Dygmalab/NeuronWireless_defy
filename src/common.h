@@ -36,11 +36,11 @@
 // clang-format off
 
 #define COMPILE_FOR_NEURON_2_HARDWARE_V1_0      0
-#define COMPILE_FOR_NEURON_2_HARDWARE_V1_1      0
+#define COMPILE_FOR_NEURON_2_HARDWARE_V1_1      1
 #define COMPILE_FOR_DEBUG_BOARD_HARDWARE_V1_0   0
 #define COMPILE_FOR_DEBUG_BOARD_HARDWARE_V1_1   0
-#define COMPILE_FOR_DEBUG_BOARD_HARDWARE_V1_2   1
-#define ENABLE_UART_DEBUG                       1
+#define COMPILE_FOR_DEBUG_BOARD_HARDWARE_V1_2   0
+#define ENABLE_UART_DEBUG                       0
 
 
 // Disable DEBUG logs for production.
