@@ -102,7 +102,7 @@ extern "C"
 //#include <Adafruit_TinyUSB.h>
 
 // Keyboard
-#include "kbd_base.h"
+#include "keyboard_api.h"
 
 #if !COMPILE_FOR_NEURON_2_HARDWARE_V1_0 && !COMPILE_FOR_NEURON_2_HARDWARE_V1_1
 #warning "<<<<<<<<< The project is not being built for production >>>>>>>>>"
@@ -309,8 +309,8 @@ void setup(void)
     Communications.init();
 
     // Keyboard
-    result = kbd_base_init();
-    ASSERT_DYGMA( result == RESULT_OK, "kbd_base_init failed!" );
+    result = kbdapi_init();
+    ASSERT_DYGMA( result == RESULT_OK, "kbdapi_init failed!" );
 
     // Kaleidoscope
     EEPROMKeymap.setup(10);            // Reserve space in the keyboard's EEPROM(flash memory) for the keymaps.
