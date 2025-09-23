@@ -104,6 +104,7 @@ extern "C"
 #warning "<<<<<<<<< The project is not being built for production >>>>>>>>>"
 #endif
 
+#define MAX_LAYERS 10
 
 Watchdog_timer watchdog_timer;
 
@@ -392,11 +393,11 @@ void setup(void)
 
     // Kaleidoscope
     Kaleidoscope.setup();
-    EEPROMKeymap.setup(10);            // Reserve space in the keyboard's EEPROM(flash memory) for the keymaps.
-    ColormapEffectDefy.max_layers(10); // Reserve space for the number of Colormap layers we will use.
+    EEPROMKeymap.setup(MAX_LAYERS);            // Reserve space in the keyboard's EEPROM(flash memory) for the keymaps.
+    ColormapEffectDefy.max_layers(MAX_LAYERS); // Reserve space for the number of Colormap layers we will use.
     // DefaultColormap.setup();
     //SuperkeysHandler.setup(); // Initialize the SuperkeysHandler plugin.
-    KeyRoleManager.setup_superkeys();   // Initialize the KeyRoleManager plugin.
+    KeyRoleManager.setup_superkeys(MAX_LAYERS);   // Initialize the KeyRoleManager plugin.
     DynamicMacros.reserve_storage(2048);
 
     // Keep the HID begin after the Kaleidoscope setup.
