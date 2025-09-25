@@ -349,7 +349,7 @@ static kaleidoscope::plugin::LEDStalkerDefy stalkerDefy{};
 KALEIDOSCOPE_INIT_PLUGINS
 (
     EEPROMSettings,
-    EEPROMKeymap, FirmwareVersion, FocusSettingsCommand, FocusEEPROMCommand, Upgrade,KeyRoleManager,
+    EEPROMKeymap, FirmwareVersion, FocusSettingsCommand, FocusEEPROMCommand, Upgrade,keyRoleManager,
     LEDControl, FocusLEDCommand,
     LEDPaletteThemeDefy, ColormapEffectDefy,
     LEDRainbowWaveEffectDefy, LEDRainbowEffectDefy, stalkerDefy, solidRedDefy,
@@ -397,7 +397,7 @@ void setup(void)
     ColormapEffectDefy.max_layers(MAX_LAYERS); // Reserve space for the number of Colormap layers we will use.
     // DefaultColormap.setup();
     //SuperkeysHandler.setup(); // Initialize the SuperkeysHandler plugin.
-    KeyRoleManager.setup_superkeys(MAX_LAYERS);   // Initialize the KeyRoleManager plugin.
+    keyRoleManager.setup_superkeys(MAX_LAYERS);   // Initialize the keyRoleManager plugin.
     DynamicMacros.reserve_storage(2048);
 
     // Keep the HID begin after the Kaleidoscope setup.
