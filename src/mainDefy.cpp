@@ -344,6 +344,7 @@ void loop()
     // Execute Kaleidoscope.
     Kaleidoscope.loop();
     Communications.run();
+    _BleManager.run();
     protocolBreathe();
     EEPROM.timer_update_periodically_run(1000);  // Check if it is necessary to write the eeprom every 1000 ms.
 
