@@ -107,6 +107,7 @@ extern "C"
 // Battery
 #include "Battery.h"
 #include "Ble_manager.h"
+#include "Radio_manager.h"
 
 #if !COMPILE_FOR_NEURON_2_HARDWARE_V1_0 && !COMPILE_FOR_NEURON_2_HARDWARE_V1_1
 #warning "<<<<<<<<< The project is not being built for production >>>>>>>>>"
@@ -323,6 +324,10 @@ void setup(void)
     // BLE
     result = _BleManager.init();
     ASSERT_DYGMA( result == RESULT_OK, "_BleManager.init failed!" );
+
+    // Radio
+    result = _RadioManager.init();
+    ASSERT_DYGMA( result == RESULT_OK, "RadioManager.init failed!" );
 
     // Kaleidoscope
     EEPROMKeymap.setup(10);            // Reserve space in the keyboard's EEPROM(flash memory) for the keymaps.
