@@ -101,13 +101,12 @@ extern "C"
 #include "rf_host_device_api.h"
 //#include <Adafruit_TinyUSB.h>
 
-// Keyboard
-#include "keyboard_api.h"
 
-// Battery
+#include "keyboard_api.h"
 #include "Battery.h"
 #include "Ble_manager.h"
 #include "Radio_manager.h"
+#include "Upgrade.h"
 
 #if !COMPILE_FOR_NEURON_2_HARDWARE_V1_0 && !COMPILE_FOR_NEURON_2_HARDWARE_V1_1
 #warning "<<<<<<<<< The project is not being built for production >>>>>>>>>"
@@ -329,6 +328,10 @@ void setup(void)
     result = _RadioManager.init();
     ASSERT_DYGMA( result == RESULT_OK, "RadioManager.init failed!" );
 
+    // Keyscanner Upgrade module
+    result = Upgrade.init();
+    ASSERT_DYGMA( result == RESULT_OK, "Upgrade.init failed!" );
+
     // Kaleidoscope
     EEPROMKeymap.setup(10);            // Reserve space in the keyboard's EEPROM(flash memory) for the keymaps.
     ColormapEffectDefy.max_layers(10); // Reserve space for the number of Colormap layers we will use.
@@ -350,6 +353,7 @@ void loop()
     Kaleidoscope.loop();
     Communications.run();
     _BleManager.run();
+    Upgrade.run();
     protocolBreathe();
     EEPROM.timer_update_periodically_run(1000);  // Check if it is necessary to write the eeprom every 1000 ms.
 
