@@ -82,11 +82,11 @@ class FirmwareVersion
      */
     static bool keyboard_is_wireless();
 
-private:
-   kbdif_t * p_kbdif = NULL;
-   result_t kbdif_initialize(void);
+  private:
+    kbdif_t * p_kbdif = NULL;
+    result_t kbdif_initialize(void);
 
-private:
+  private:
     static uint16_t settings_base_;
 
     enum request_t {

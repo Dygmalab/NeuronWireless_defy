@@ -18,10 +18,10 @@
 
 #include "FirmwareVersion.h"
 #include "Communications.h"
+#include "Kaleidoscope-EEPROM-Settings.h"
 #include "Kaleidoscope-FocusSerial.h"
 #include "Kaleidoscope.h"
 //#include "nrf_log.h"
-#include <Kaleidoscope-EEPROM-Settings.h>
 
 #include "kbd_if_manager.h"
 
