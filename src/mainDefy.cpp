@@ -316,6 +316,10 @@ void setup(void)
     result = kbdapi_init();
     ASSERT_DYGMA( result == RESULT_OK, "kbdapi_init failed!" );
 
+    // Firmware version
+    result = FirmwareVersion.init();
+    ASSERT_DYGMA( result == RESULT_OK, "FirmwareVersion.init failed!" );
+
     // Battery
     result = Battery.init();
     ASSERT_DYGMA( result == RESULT_OK, "Battery.init failed!" );

@@ -1,5 +1,5 @@
 /*
- * kaleidoscope::plugin::FirmwareVersion -- Tell the firmware version via Focus
+ * FirmwareVersion -- Provide the version and system hardware configuration
  *
  * Copyright (C) 2020  Dygma Lab S.L.
  *
@@ -25,6 +25,8 @@
 #include <Kaleidoscope-Ranges.h>
 #include <cstdio>
 
+#include "kbd_if_manager.h"
+
 #ifndef DEFY_FW_VERSION
 #error "Firmware package version is not specified."
     #define DEFY_FW_VERSION "N/A"
@@ -36,8 +38,6 @@
 # define base16char(i) ("0123456789ABCDEF"[i])
 
 namespace kaleidoscope
-{
-namespace plugin
 {
 
     uint16_t FirmwareVersion::settings_base_ = 0;
@@ -77,8 +77,13 @@ bool inline filterHand(Communications_protocol::Devices incomingDevice, bool rig
 }
 
 
-EventHandlerResult FirmwareVersion::onSetup()
+result_t FirmwareVersion::init()
 {
+    result_t result = RESULT_ERR;
+
+    result = kbdif_initialize();
+    EXIT_IF_ERR( result, "kbdif_initialize failed" );
+
     settings_base_ = kaleidoscope::plugin::EEPROMSettings::requestSlice((sizeof(specifications_left_side)*2)); //multiply by 2
     // because we have two specification structures.
     Communications.callbacks.bind(CONFIGURATION, (
@@ -174,28 +179,8 @@ EventHandlerResult FirmwareVersion::onSetup()
     //NRF_LOG_DEBUG("Getting configurations right %i", specifications_right_side.configuration);
     //NRF_LOG_DEBUG("Getting configurations left %i", specifications_left_side.configuration);
 
-    return EventHandlerResult::OK;
-}
-
-EventHandlerResult FirmwareVersion::onFocusEvent(const char *command)
-{
-    const char *cmd = "version";
-    if (::Focus.handleHelp(command, cmd)) return EventHandlerResult::OK;
-
-    if (strcmp(command, cmd) != 0) return EventHandlerResult::OK;
-
-    //NRF_LOG_DEBUG("read request: version");
-
-    char cstr[70];
-    strcpy(cstr, DEFY_FW_VERSION);
-    ::Focus.sendRaw<char *>(cstr);
-
-    return EventHandlerResult::EVENT_CONSUMED;
-}
-
-EventHandlerResult FirmwareVersion::beforeEachCycle()
-{
-    return EventHandlerResult::OK;
+_EXIT:
+    return result;
 }
 
 bool FirmwareVersion::are_specifications_diferences( Communications_protocol::Packet  const &packet_check , bool side)
@@ -263,7 +248,49 @@ bool FirmwareVersion::keyboard_is_wireless()
     return resp;
 }
 
-} // namespace plugin
+result_t FirmwareVersion::kbdif_initialize()
+{
+    result_t result = RESULT_ERR;
+    kbdif_conf_t config;
+
+    /* Prepare the kbdif configuration */
+    config.p_instance = this;
+    config.handlers = &kbdif_handlers;
+
+    /* Initialize the kbdif */
+    result = kbdif_init( &p_kbdif, &config );
+    EXIT_IF_ERR( result, "kbdif_init failed" );
+
+    /* Add the kbdif into the kbdif manager */
+    result = kbdifmgr_add( p_kbdif );
+    EXIT_IF_ERR( result, "kbdifmgr_add failed" );
+
+_EXIT:
+    return result;
+}
+
+kbdapi_event_result_t FirmwareVersion::kbdif_command_event_cb( void * p_instance, const char * p_command )
+{
+    const char *cmd = "version";
+    if (::Focus.handleHelp(p_command, cmd)) return KBDAPI_EVENT_RESULT_IGNORED;
+
+    if (strcmp(p_command, cmd) != 0) return KBDAPI_EVENT_RESULT_IGNORED;
+
+    //NRF_LOG_DEBUG("read request: version");
+
+    char cstr[70];
+    strcpy(cstr, DEFY_FW_VERSION);
+    ::Focus.sendRaw<char *>(cstr);
+
+    return KBDAPI_EVENT_RESULT_CONSUMED;
+}
+
+const kbdif_handlers_t FirmwareVersion::kbdif_handlers =
+{
+    .key_event_cb = NULL,
+    .command_event_cb = kbdif_command_event_cb,
+};
+
 } // namespace kaleidoscope
 
-kaleidoscope::plugin::FirmwareVersion FirmwareVersion;
+kaleidoscope::FirmwareVersion FirmwareVersion;

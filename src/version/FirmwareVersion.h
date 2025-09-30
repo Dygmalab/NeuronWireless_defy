@@ -1,5 +1,5 @@
 /*
- * kaleidoscope::plugin::FirmwareVersion -- Tell the firmware version via Focus
+ * FirmwareVersion -- Provide the version and system hardware configuration
  *
  * Copyright (C) 2020  Dygma Lab S.L.
  *
@@ -20,12 +20,12 @@
 
 #include "Kaleidoscope.h"
 
+#include "kbd_if.h"
+
 namespace kaleidoscope
 {
-namespace plugin
-{
 
-class FirmwareVersion : public Plugin
+class FirmwareVersion
 {
   public:
     FirmwareVersion()
@@ -36,9 +36,8 @@ class FirmwareVersion : public Plugin
     uint32_t start_time_{0};
     uint32_t configuration_timeout_{0};
 
-    EventHandlerResult onFocusEvent(const char *command);
-    EventHandlerResult beforeEachCycle();
-    EventHandlerResult onSetup();
+    result_t init();
+
     uint8_t get_device_name();
     String get_left_side_chip_id();
     uint64_t get_left_side_rf_chip_id();
@@ -87,6 +86,10 @@ class FirmwareVersion : public Plugin
     static bool keyboard_is_wireless();
 
 private:
+   kbdif_t * p_kbdif = NULL;
+   result_t kbdif_initialize(void);
+
+private:
     static uint16_t settings_base_;
 
     enum request_t {
@@ -115,9 +118,10 @@ private:
 
     static bool memory_specifications_empty;
 
+    static const kbdif_handlers_t kbdif_handlers;
+    static kbdapi_event_result_t kbdif_command_event_cb( void * p_instance, const char * p_command );
 };
 
-}   // namespace plugin
 }   // namespace kaleidoscope
 
-extern kaleidoscope::plugin::FirmwareVersion FirmwareVersion;
+extern kaleidoscope::FirmwareVersion FirmwareVersion;
