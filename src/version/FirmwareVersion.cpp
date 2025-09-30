@@ -20,10 +20,8 @@
 #include "Communications.h"
 #include "Kaleidoscope-FocusSerial.h"
 #include "Kaleidoscope.h"
-#include "nrf_log.h"
+//#include "nrf_log.h"
 #include <Kaleidoscope-EEPROM-Settings.h>
-#include <Kaleidoscope-Ranges.h>
-#include <cstdio>
 
 #include "kbd_if_manager.h"
 
@@ -36,9 +34,6 @@
 #define RP2040_ID_START_PACKAGE 12
 
 # define base16char(i) ("0123456789ABCDEF"[i])
-
-namespace kaleidoscope
-{
 
     uint16_t FirmwareVersion::settings_base_ = 0;
 
@@ -112,8 +107,8 @@ result_t FirmwareVersion::init()
                     if ( !configuration.configuration_receive_left )
                     {
                         //NRF_LOG_DEBUG("saving specifications left side");
-                        Runtime.storage().put(settings_base_, specifications_left_side);
-                        Runtime.storage().commit();
+                        kaleidoscope::Runtime.storage().put(settings_base_, specifications_left_side);
+                        kaleidoscope::Runtime.storage().commit();
                         configuration.configuration_receive_left = true;
                         left_side_spec_changes = true;
                     }
@@ -140,17 +135,17 @@ result_t FirmwareVersion::init()
                     if (!configuration.configuration_receive_right )
                     {
                         //NRF_LOG_DEBUG("saving specifications right side");
-                        Runtime.storage().put(settings_base_ + sizeof(specifications_left_side), specifications_right_side);
-                        Runtime.storage().commit();
+                        kaleidoscope::Runtime.storage().put(settings_base_ + sizeof(specifications_left_side), specifications_right_side);
+                        kaleidoscope::Runtime.storage().commit();
                         configuration.configuration_receive_right = true;
                         right_side_spec_changes = true;
                     }
                 }
             }));
 
-    Runtime.storage().get(settings_base_, specifications_left_side);
+    kaleidoscope::Runtime.storage().get(settings_base_, specifications_left_side);
 
-    Runtime.storage().get(settings_base_ + sizeof (specifications_left_side), specifications_right_side);
+    kaleidoscope::Runtime.storage().get(settings_base_ + sizeof (specifications_left_side), specifications_right_side);
 
     /*Left side*/
     if (specifications_left_side.configuration == 0xFF || specifications_left_side.configuration == 0 )
@@ -291,6 +286,4 @@ const kbdif_handlers_t FirmwareVersion::kbdif_handlers =
     .command_event_cb = kbdif_command_event_cb,
 };
 
-} // namespace kaleidoscope
-
-kaleidoscope::FirmwareVersion FirmwareVersion;
+FirmwareVersion firmwareVersion;

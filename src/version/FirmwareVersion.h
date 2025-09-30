@@ -18,12 +18,9 @@
 
 #pragma once
 
-#include "Kaleidoscope.h"
-
+#include "Arduino.h"
+#include "Communications_protocol.h"
 #include "kbd_if.h"
-
-namespace kaleidoscope
-{
 
 class FirmwareVersion
 {
@@ -122,6 +119,4 @@ private:
     static kbdapi_event_result_t kbdif_command_event_cb( void * p_instance, const char * p_command );
 };
 
-}   // namespace kaleidoscope
-
-extern kaleidoscope::FirmwareVersion FirmwareVersion;
+extern FirmwareVersion firmwareVersion;
