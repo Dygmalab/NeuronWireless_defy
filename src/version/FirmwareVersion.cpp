@@ -286,4 +286,4 @@ const kbdif_handlers_t FirmwareVersion::kbdif_handlers =
     .command_event_cb = kbdif_command_event_cb,
 };
 
-FirmwareVersion firmwareVersion;
+class FirmwareVersion FirmwareVersion;
