@@ -329,7 +329,7 @@ void setup(void)
     ASSERT_DYGMA( result == RESULT_OK, "_BleManager.init failed!" );
 
     // Radio
-    result = _RadioManager.init();
+    result = RadioManager.init();
     ASSERT_DYGMA( result == RESULT_OK, "RadioManager.init failed!" );
 
     // Keyscanner Upgrade module
