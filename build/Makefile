@@ -229,6 +229,7 @@ INCDIR += -I$(KALEIDOSCOPE_ROOT_DIR)/src/
 INCDIR += -I$(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/device/dygma/
 INCDIR += -I$(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/device/dygma/keyboardManager
 INCDIR += -I$(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/device/dygma/keyboardManager/universalModules
+INCDIR += -I$(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/plugin/
 
 # SDK
 INCDIR += -I$(SDK_NRF5_SDK_ROOT_DIR)/components/ble/ble_advertising/
@@ -308,11 +309,13 @@ SRCSC += $(LIB_ROOT_DIR)/NRf_platform/middleware/utils/dl_crc32.c
 SRCSCXX += $(LIB_ROOT_DIR)/Fifo_buffer/Fifo_buffer.cpp
 SRCSCXX += $(LIB_ROOT_DIR)/EEPROM/EEPROM.cpp
 SRCSCXX += $(LIB_ROOT_DIR)/NeuronLedLibrary/Colormap-Defy.cpp
+SRCSCXX += $(LIB_ROOT_DIR)/NeuronLedLibrary/LEDEffect.cpp
 SRCSCXX += $(LIB_ROOT_DIR)/NeuronLedLibrary/LEDEffect-BatteryStatus.cpp
 SRCSCXX += $(LIB_ROOT_DIR)/NeuronLedLibrary/LEDEffect-Bluetooth-Pairing-Defy.cpp
 SRCSCXX += $(LIB_ROOT_DIR)/NeuronLedLibrary/LEDEffect-Rainbow-Defy.cpp
 SRCSCXX += $(LIB_ROOT_DIR)/NeuronLedLibrary/LEDEffect-SolidColor-Defy.cpp
 SRCSCXX += $(LIB_ROOT_DIR)/NeuronLedLibrary/LEDEffect-Stalker-Defy.cpp
+SRCSCXX += $(LIB_ROOT_DIR)/NeuronLedLibrary/LEDManager.cpp
 SRCSCXX += $(LIB_ROOT_DIR)/NeuronLedLibrary/LED-Palette-Theme-Defy.cpp
 
 SRCSCXX += $(LIB_ROOT_DIR)/Spi_slave/Spi_slave.cpp
@@ -399,6 +402,7 @@ SRCSC += $(KEYBOARD_API_ROOT_DIR)/keyboard_api.c
 # Kaleidoscope FAL (Framework Abstraction Layer)
 SRCSCXX += $(KALEIDOSCOPE_ADAPTER_ROOT_DIR)/fal/ll/kbdfal_ll_base.cpp
 SRCSCXX += $(KALEIDOSCOPE_ADAPTER_ROOT_DIR)/plugins/KbdInterface.cpp
+SRCSCXX += $(KALEIDOSCOPE_ADAPTER_ROOT_DIR)/plugins/LEDControlDygma.cpp
 
 # Kaleidoscope
 SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/device/dygma/keyboardManager/universalModules/bootloader_util.cpp
@@ -418,7 +422,6 @@ SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/plugin/HostPowerManagement.
 SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/plugin/IdleLEDsDefy.cpp
 SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/plugin/LayerFocus.cpp
 SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/plugin/LEDControl/LEDUtils.cpp
-SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/plugin/LEDControlDefy.cpp
 SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/plugin/MouseKeys.cpp
 SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/plugin/MouseKeys/MouseWrapper.cpp
 SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/plugin/OneShot.cpp
@@ -472,7 +475,7 @@ DEFINES += -DBOARD_PRODUCT=\"DEFY\"
 DEFINES += -DUSB_PRODUCT=\"DEFY\"
 DEFINES += -DKALEIDOSCOPE_HARDWARE_H=\"kaleidoscope/device/dygma/keyboardManager/KeyboardManager.h\"
 
-DEFINES += -DKALEIDOSCOPE_LED_CONTROL_H=\<kaleidoscope/plugin/LEDControlDefy.h\>
+DEFINES += -DKALEIDOSCOPE_LED_CONTROL_H=\"LEDControlDygma.h\"
 
 DEFINES += -DEEPROM_EMULATION_SIZE=8192
 

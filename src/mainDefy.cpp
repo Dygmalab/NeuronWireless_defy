@@ -105,6 +105,7 @@ extern "C"
 #include "keyboard_api.h"
 #include "Battery.h"
 #include "Ble_manager.h"
+#include "LEDManager.h"
 #include "Radio_manager.h"
 #include "Upgrade.h"
 
@@ -326,7 +327,11 @@ void setup(void)
 
     // BLE
     result = BleManager.init();
-    ASSERT_DYGMA( result == RESULT_OK, "_BleManager.init failed!" );
+    ASSERT_DYGMA( result == RESULT_OK, "BleManager.init failed!" );
+
+    // LED Manager
+    result = LEDManager.init();
+    ASSERT_DYGMA( result == RESULT_OK, "LEDManager.init failed!" );
 
     // Radio
     result = RadioManager.init();
