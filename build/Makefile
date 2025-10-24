@@ -308,13 +308,15 @@ SRCSC += $(LIB_ROOT_DIR)/NRf_platform/middleware/utils/dl_crc32.c
 
 SRCSCXX += $(LIB_ROOT_DIR)/Fifo_buffer/Fifo_buffer.cpp
 SRCSCXX += $(LIB_ROOT_DIR)/EEPROM/EEPROM.cpp
-SRCSCXX += $(LIB_ROOT_DIR)/NeuronLedLibrary/Colormap-Defy.cpp
+SRCSCXX += $(LIB_ROOT_DIR)/NeuronLedLibrary/LEDDevice.cpp
+SRCSCXX += $(LIB_ROOT_DIR)/NeuronLedLibrary/LEDDevice-Remote.cpp
 SRCSCXX += $(LIB_ROOT_DIR)/NeuronLedLibrary/LEDEffect.cpp
 SRCSCXX += $(LIB_ROOT_DIR)/NeuronLedLibrary/LEDEffect-BatteryStatus.cpp
 SRCSCXX += $(LIB_ROOT_DIR)/NeuronLedLibrary/LEDEffect-Bluetooth-Pairing-Defy.cpp
 SRCSCXX += $(LIB_ROOT_DIR)/NeuronLedLibrary/LEDEffect-Rainbow-Defy.cpp
 SRCSCXX += $(LIB_ROOT_DIR)/NeuronLedLibrary/LEDEffect-SolidColor-Defy.cpp
 SRCSCXX += $(LIB_ROOT_DIR)/NeuronLedLibrary/LEDEffect-Stalker-Defy.cpp
+SRCSCXX += $(LIB_ROOT_DIR)/NeuronLedLibrary/LEDLayers.cpp
 SRCSCXX += $(LIB_ROOT_DIR)/NeuronLedLibrary/LEDManager.cpp
 SRCSCXX += $(LIB_ROOT_DIR)/NeuronLedLibrary/LED-Palette-Theme-Defy.cpp
 

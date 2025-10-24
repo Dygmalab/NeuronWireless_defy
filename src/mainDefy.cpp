@@ -81,7 +81,6 @@ extern "C"
 //// #include "LED-CapsLockLight.h"
 
 // LED effects
-#include "Colormap-Defy.h"
 //#include "LED-Palette-Theme-Defy.h"
 //#include "LEDEffect-BatteryStatus-Defy.h"
 //#include "LEDEffect-Bluetooth-Pairing-Defy.h"
@@ -89,8 +88,7 @@ extern "C"
 //#include "LEDEffect-Rainbow-Defy.h"
 //#include "LEDEffect-SolidColor-Defy.h"
 //#include "LEDEffect-Stalker-Defy.h"
-//// #include "DefaultColormap.h"
-//
+
 //#include "Battery.h"
 //#include "Ble_composite_dev.h"
 //#include "Ble_manager.h"
@@ -105,6 +103,7 @@ extern "C"
 #include "keyboard_api.h"
 #include "Battery.h"
 #include "Ble_manager.h"
+#include "LEDDevice-Remote.h"
 #include "LEDManager.h"
 #include "Radio_manager.h"
 #include "Upgrade.h"
@@ -115,6 +114,20 @@ extern "C"
 
 
 Watchdog_timer watchdog_timer;
+
+/*****************************************************/
+/*              The list of LED Devices              */
+/*****************************************************/
+
+static LEDDeviceRemote LEDDeviceLeftBL( LEDDevice::LED_DEVICE_TYPE_LEFT_BL, LEDS_HAND_LEFT );
+static LEDDeviceRemote LEDDeviceLeftUG( LEDDevice::LED_DEVICE_TYPE_LEFT_UG, UNDERGLOW_LEDS_LEFT_SIDE );
+static LEDDeviceRemote LEDDeviceRightBL( LEDDevice::LED_DEVICE_TYPE_RIGHT_BL, LEDS_HAND_RIGHT );
+static LEDDeviceRemote LEDDeviceRightUG( LEDDevice::LED_DEVICE_TYPE_RIGHT_UG, UNDERGLOW_LEDS_RIGHT_SIDE );
+
+static LEDDevice_list_t LEDDevice_list =
+{
+    &LEDDeviceLeftBL, &LEDDeviceRightBL, &LEDDeviceLeftUG, &LEDDeviceRightUG,
+};
 
 /*lint -save -e14 */
 void app_error_fault_handler(uint32_t id, uint32_t pc, uint32_t info)  // On assert, the system can only recover with a reset.
@@ -288,6 +301,20 @@ static void init_gpio(void);
 void reset_mcu(void);
 void yield(void);
 
+static result_t LEDManager_init(void)
+{
+    result_t result = RESULT_ERR;
+    LEDManager::LEDManager_config_t config;
+
+    config.layers.p_LEDDevice_list = &LEDDevice_list;
+    config.layers.layers_count = 10;
+
+    result = LEDManager.init( config );
+    ASSERT_DYGMA( result == RESULT_OK, "LEDManager.init failed!" );
+
+    return result;
+}
+
 void setup(void)
 {
     result_t result;
@@ -329,10 +356,6 @@ void setup(void)
     result = BleManager.init();
     ASSERT_DYGMA( result == RESULT_OK, "BleManager.init failed!" );
 
-    // LED Manager
-    result = LEDManager.init();
-    ASSERT_DYGMA( result == RESULT_OK, "LEDManager.init failed!" );
-
     // Radio
     result = RadioManager.init();
     ASSERT_DYGMA( result == RESULT_OK, "RadioManager.init failed!" );
@@ -343,8 +366,11 @@ void setup(void)
 
     // Kaleidoscope
     EEPROMKeymap.setup(10);            // Reserve space in the keyboard's EEPROM(flash memory) for the keymaps.
-    ColormapEffectDefy.max_layers(10); // Reserve space for the number of Colormap layers we will use.
-    // DefaultColormap.setup();
+
+    // LED Manager
+    result = LEDManager_init();
+    ASSERT_DYGMA( result == RESULT_OK, "LEDManager_init failed!" );
+
     DynamicSuperKeys.setup(0, 1024);
     DynamicMacros.reserve_storage(2048);
 
