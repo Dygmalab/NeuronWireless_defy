@@ -105,6 +105,7 @@ extern "C"
 #include "Ble_manager.h"
 #include "LEDDevice-Remote.h"
 #include "LEDManager.h"
+#include "LEDPaletteRGBW.h"
 #include "Radio_manager.h"
 #include "Upgrade.h"
 
@@ -116,18 +117,24 @@ extern "C"
 Watchdog_timer watchdog_timer;
 
 /*****************************************************/
-/*              The list of LED Devices              */
+/*                    LED Manager                    */
 /*****************************************************/
 
+/* LED Palette */
+static class LEDPaletteRGBW LEDPaletteRGBW;
+
+/* LED Device List */
 static LEDDeviceRemote LEDDeviceLeftBL( LEDDevice::LED_DEVICE_TYPE_LEFT_BL, LEDS_HAND_LEFT );
 static LEDDeviceRemote LEDDeviceLeftUG( LEDDevice::LED_DEVICE_TYPE_LEFT_UG, UNDERGLOW_LEDS_LEFT_SIDE );
 static LEDDeviceRemote LEDDeviceRightBL( LEDDevice::LED_DEVICE_TYPE_RIGHT_BL, LEDS_HAND_RIGHT );
 static LEDDeviceRemote LEDDeviceRightUG( LEDDevice::LED_DEVICE_TYPE_RIGHT_UG, UNDERGLOW_LEDS_RIGHT_SIDE );
+static LEDDevice       LEDDeviceNeuron( LEDDevice::LED_DEVICE_TYPE_NEURON, NEURON_LED );
 
 static LEDDevice_list_t LEDDevice_list =
 {
-    &LEDDeviceLeftBL, &LEDDeviceRightBL, &LEDDeviceLeftUG, &LEDDeviceRightUG,
+    &LEDDeviceLeftBL, &LEDDeviceRightBL, &LEDDeviceLeftUG, &LEDDeviceRightUG, &LEDDeviceNeuron
 };
+
 
 /*lint -save -e14 */
 void app_error_fault_handler(uint32_t id, uint32_t pc, uint32_t info)  // On assert, the system can only recover with a reset.
@@ -306,8 +313,10 @@ static result_t LEDManager_init(void)
     result_t result = RESULT_ERR;
     LEDManager::LEDManager_config_t config;
 
-    config.layers.p_LEDDevice_list = &LEDDevice_list;
-    config.layers.layers_count = 10;
+    config.p_LEDPalette = &LEDPaletteRGBW;
+
+    config.p_LEDDevice_list = &LEDDevice_list;
+    config.layers_count = 10;
 
     result = LEDManager.init( config );
     ASSERT_DYGMA( result == RESULT_OK, "LEDManager.init failed!" );

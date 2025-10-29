@@ -182,6 +182,7 @@ INCDIR += -I$(LIB_ROOT_DIR)/EEPROM/
 INCDIR += -I$(LIB_ROOT_DIR)/NeuronLedLibrary/
 INCDIR += -I$(LIB_ROOT_DIR)/NeuronLedLibrary/LedModeSerializable/
 INCDIR += -I$(LIB_ROOT_DIR)/NeuronLedLibrary/LedModeSerializable/src/
+INCDIR += -I$(LIB_ROOT_DIR)/NeuronLedLibrary/palette/
 INCDIR += -I$(LIB_ROOT_DIR)/rf_host_device/
 INCDIR += -I$(LIB_ROOT_DIR)/rf_host_device/rf_host_device/includes/
 INCDIR += -I$(LIB_ROOT_DIR)/rf_host_device/rf_host_device/includes/middleware/
@@ -318,7 +319,8 @@ SRCSCXX += $(LIB_ROOT_DIR)/NeuronLedLibrary/LEDEffect-SolidColor-Defy.cpp
 SRCSCXX += $(LIB_ROOT_DIR)/NeuronLedLibrary/LEDEffect-Stalker-Defy.cpp
 SRCSCXX += $(LIB_ROOT_DIR)/NeuronLedLibrary/LEDLayers.cpp
 SRCSCXX += $(LIB_ROOT_DIR)/NeuronLedLibrary/LEDManager.cpp
-SRCSCXX += $(LIB_ROOT_DIR)/NeuronLedLibrary/LED-Palette-Theme-Defy.cpp
+SRCSCXX += $(LIB_ROOT_DIR)/NeuronLedLibrary/palette/LEDPalette.cpp
+SRCSCXX += $(LIB_ROOT_DIR)/NeuronLedLibrary/palette/LEDPaletteRGBW.cpp
 
 SRCSCXX += $(LIB_ROOT_DIR)/Spi_slave/Spi_slave.cpp
 SRCSCXX += $(LIB_ROOT_DIR)/Spi_slave/SpiPort.cpp
