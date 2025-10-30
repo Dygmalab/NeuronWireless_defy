@@ -401,6 +401,8 @@ void loop()
     protocolBreathe();
     EEPROM.timer_update_periodically_run(1000);  // Check if it is necessary to write the eeprom every 1000 ms.
 
+    LEDManager.run();
+
     NRF_LOG_PROCESS(); // Process deferred logs (send it to the host computer via UART).
 
     /* Control the sleep mode here */
