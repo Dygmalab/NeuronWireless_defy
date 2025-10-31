@@ -261,47 +261,54 @@ void hostPowerManagementEventHandler(kaleidoscope::plugin::HostPowerManagement::
     toggleLedsOnSuspendResume(event);
 }
 
-enum
-{
-    COMBO_TOGGLE_NKRO_MODE
-};
+/*****************************************************************************************************/
+/* MAGIC COMBOS: Old code which has been used for switch between NKRO and 6KRO because some older
+ *               computers were not compatible with NKRO on low level (bios). We are trying to remove
+ *               this switch but we keep it here for some time to see if anybody complains.
+ *               (Commented in Nov 2025) */
+/*****************************************************************************************************/
 
-static uint32_t protocol_toggle_start = 0;
-
-static void toggleKeyboardProtocol(uint8_t combo_index)
-{
-    USBQuirks.toggleKeyboardProtocol();
-    protocol_toggle_start = Kaleidoscope.millisAtCycleStart();
-}
-
-static void protocolBreathe()
-{
-    if (Kaleidoscope.hasTimeExpired(protocol_toggle_start, uint16_t(10000)))
-    {
-        protocol_toggle_start = 0;
-    }
-
-    if (protocol_toggle_start == 0) return;
-
-    uint8_t hue = 120;
-    if (Kaleidoscope.hid().keyboard().getProtocol() == HID_BOOT_PROTOCOL)
-    {
-        hue = 0;
-    }
-
-    cRGB color = breath_compute(hue);
-    ::LEDControl.setCrgbAt(KeyAddr(4, 0), color);
-    ::LEDControl.setCrgbAt(KeyAddr(3, 0), color);
-    ::LEDControl.setCrgbAt(KeyAddr(4, 2), color);
-    ::LEDControl.setCrgbAt(KeyAddr(0, 6), color);
-    ::LEDControl.syncLeds();
-}
-
-USE_MAGIC_COMBOS(
-{.action = toggleKeyboardProtocol,
-// Left Ctrl + Left Shift + Left Alt + 6
-.keys = {R4C0, R3C0, R4C2, R0C6}}
-);
+//enum
+//{
+//    COMBO_TOGGLE_NKRO_MODE
+//};
+//
+//static uint32_t protocol_toggle_start = 0;
+//
+//static void toggleKeyboardProtocol(uint8_t combo_index)
+//{
+//    USBQuirks.toggleKeyboardProtocol();
+//    protocol_toggle_start = Kaleidoscope.millisAtCycleStart();
+//}
+//
+//static void protocolBreathe()
+//{
+//    if (Kaleidoscope.hasTimeExpired(protocol_toggle_start, uint16_t(10000)))
+//    {
+//        protocol_toggle_start = 0;
+//    }
+//
+//    if (protocol_toggle_start == 0) return;
+//
+//    uint8_t hue = 120;
+//    if (Kaleidoscope.hid().keyboard().getProtocol() == HID_BOOT_PROTOCOL)
+//    {
+//        hue = 0;
+//    }
+//
+//    cRGB color = breath_compute(hue);
+//    ::LEDControl.setCrgbAt(KeyAddr(4, 0), color);
+//    ::LEDControl.setCrgbAt(KeyAddr(3, 0), color);
+//    ::LEDControl.setCrgbAt(KeyAddr(4, 2), color);
+//    ::LEDControl.setCrgbAt(KeyAddr(0, 6), color);
+//    ::LEDControl.syncLeds();
+//}
+//
+//USE_MAGIC_COMBOS(
+//{.action = toggleKeyboardProtocol,
+//// Left Ctrl + Left Shift + Left Alt + 6
+//.keys = {R4C0, R3C0, R4C2, R0C6}}
+//);
 
 static void gpio_output_voltage_setup(void);
 static void init_gpio(void);
@@ -398,7 +405,7 @@ void loop()
     Communications.run();
     BleManager.run();
     Upgrade.run();
-    protocolBreathe();
+//    protocolBreathe();    /* (Commented in Nov 2025) See the note above */
     EEPROM.timer_update_periodically_run(1000);  // Check if it is necessary to write the eeprom every 1000 ms.
 
     LEDManager.run();
