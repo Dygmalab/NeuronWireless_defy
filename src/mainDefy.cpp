@@ -242,10 +242,10 @@ void toggleLedsOnSuspendResume(kaleidoscope::plugin::HostPowerManagement::Event 
     switch (event)
     {
         case kaleidoscope::plugin::HostPowerManagement::Suspend:
-            LEDControl.disable();
+            LEDManager.leds_disable();
             break;
         case kaleidoscope::plugin::HostPowerManagement::Resume:
-            LEDControl.enable();
+            LEDManager.leds_enable();
             break;
         case kaleidoscope::plugin::HostPowerManagement::Sleep:
             break;
