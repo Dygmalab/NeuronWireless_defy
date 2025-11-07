@@ -63,10 +63,10 @@ extern "C"
 //#include "Kaleidoscope-FocusSerial.h"
 //#include "Kaleidoscope-IdleLEDsDefy.h"
 //#include "Kaleidoscope-LayerFocus.h"
-#include "Kaleidoscope-LEDControl.h"
-#include "Kaleidoscope-MagicCombo.h"
+//#include "Kaleidoscope-LEDControl.h"
+//#include "Kaleidoscope-MagicCombo.h"
 //#include "Kaleidoscope-MouseKeys.h"
-#include "Kaleidoscope-USB-Quirks.h"
+//#include "Kaleidoscope-USB-Quirks.h"
 //#include "Kaleidoscope.h"
 //// #include "RaiseIdleLEDs.h"
 //
@@ -134,7 +134,6 @@ static LEDDevice_list_t LEDDevice_list =
 {
     &LEDDeviceLeftBL, &LEDDeviceRightBL, &LEDDeviceLeftUG, &LEDDeviceRightUG, &LEDDeviceNeuron
 };
-
 
 /*lint -save -e14 */
 void app_error_fault_handler(uint32_t id, uint32_t pc, uint32_t info)  // On assert, the system can only recover with a reset.
