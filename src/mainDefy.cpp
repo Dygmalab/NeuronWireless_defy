@@ -103,6 +103,7 @@ extern "C"
 #include "keyboard_api.h"
 #include "Battery.h"
 #include "Ble_manager.h"
+#include "configuration.h"
 #include "LEDDevice-Remote.h"
 #include "LEDManager.h"
 #include "LEDPaletteRGBW.h"
@@ -352,6 +353,10 @@ void setup(void)
     NRF_LOG_INFO("Initializing...");
     NRF_LOG_FLUSH();
 
+    // Initialize the System Configuration
+    result = configuration_init();
+    ASSERT_DYGMA( result == RESULT_OK, "configuration_init failed!" );
+
     // Initialize the communications before Kaleidoscope to make sure the correct order of the incoming message processing
     Communications.init();
 
@@ -408,6 +413,7 @@ void loop()
     EEPROM.timer_update_periodically_run(1000);  // Check if it is necessary to write the eeprom every 1000 ms.
 
     LEDManager.run();
+    configuration_run();
 
     NRF_LOG_PROCESS(); // Process deferred logs (send it to the host computer via UART).
 

@@ -202,6 +202,7 @@ INCDIR += -I$(LIB_ROOT_DIR)/UpgradeKeyscanner/src/
 INCDIR += -I$(LIB_ROOT_DIR)/CRC/
 INCDIR += -I$(LIB_ROOT_DIR)/Battery_manager/
 INCDIR += -I$(LIB_ROOT_DIR)/Ble_manager/
+INCDIR += -I$(LIB_ROOT_DIR)/Config_manager/
 INCDIR += -I$(LIB_ROOT_DIR)/RF_manager/
 INCDIR += -I$(LIB_ROOT_DIR)/utils/Do_once/
 INCDIR += -I$(LIB_ROOT_DIR)/utils/Run_task_once/
@@ -335,6 +336,7 @@ SRCSCXX += $(LIB_ROOT_DIR)/UpgradeKeyscanner/src/Upgrade.cpp
 SRCSCXX += $(LIB_ROOT_DIR)/CRC/CRC_wrapper.cpp
 SRCSCXX += $(LIB_ROOT_DIR)/Battery_manager/Battery.cpp
 SRCSCXX += $(LIB_ROOT_DIR)/Ble_manager/Ble_manager.cpp
+SRCSCXX += $(LIB_ROOT_DIR)/Config_manager/Config_manager.cpp
 SRCSCXX += $(LIB_ROOT_DIR)/RF_manager/Radio_manager.cpp
 SRCSCXX += $(LIB_ROOT_DIR)/utils/Timer/Timer.cpp
 
@@ -401,15 +403,18 @@ SRCSC += $(wildcard $(SDK_NRF5_SDK_ROOT_DIR)/components/libraries/log/src/*.c)
 
 # Keyboard API
 SRCSC += $(KEYBOARD_API_ROOT_DIR)/falsep/kbd_base.c
+SRCSC += $(KEYBOARD_API_ROOT_DIR)/falsep/kbd_memory.c
 SRCSC += $(KEYBOARD_API_ROOT_DIR)/interfaces/kbd_if.c
 SRCSC += $(KEYBOARD_API_ROOT_DIR)/modules/kbd_if_manager.c
 SRCSC += $(KEYBOARD_API_ROOT_DIR)/keyboard_api.c
 
 # Kaleidoscope FAL (Framework Abstraction Layer)
 SRCSCXX += $(KALEIDOSCOPE_ADAPTER_ROOT_DIR)/fal/ll/kbdfal_ll_base.cpp
+SRCSCXX += $(KALEIDOSCOPE_ADAPTER_ROOT_DIR)/fal/ll/kbdfal_ll_memory.cpp
+SRCSCXX += $(KALEIDOSCOPE_ADAPTER_ROOT_DIR)/plugins/IdleLedsDygma.cpp
 SRCSCXX += $(KALEIDOSCOPE_ADAPTER_ROOT_DIR)/plugins/KbdInterface.cpp
 SRCSCXX += $(KALEIDOSCOPE_ADAPTER_ROOT_DIR)/plugins/LEDControlDygma.cpp
-SRCSCXX += $(KALEIDOSCOPE_ADAPTER_ROOT_DIR)/plugins/IdleLedsDygma.cpp
+SRCSCXX += $(KALEIDOSCOPE_ADAPTER_ROOT_DIR)/plugins/QukeysDygma.cpp
 
 # Kaleidoscope
 SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/device/dygma/keyboardManager/universalModules/bootloader_util.cpp
@@ -431,7 +436,6 @@ SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/plugin/LEDControl/LEDUtils.
 SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/plugin/MouseKeys.cpp
 SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/plugin/MouseKeys/MouseWrapper.cpp
 SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/plugin/OneShot.cpp
-SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/plugin/Qukeys.cpp
 SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/Runtime.cpp
 SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope_internal/device.cpp
 SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope_internal/LEDModeManager.cpp
