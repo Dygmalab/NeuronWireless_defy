@@ -19,6 +19,7 @@
 #include "configuration.h"
 #include "Config_manager.h"
 #include "LEDManager.h"
+#include "MouseKeysDygma.h"
 #include "QukeysDygma.h"
 
 typedef struct PACK
@@ -30,10 +31,11 @@ typedef struct PACK
     LEDManager::idleleds_conf_t idleleds;
 
 //    Qukeys qukeys;                /* addr. 0x0015 */
-    kaleidoscope::plugin::Qukeys::qukeys_config_t qukeys;
+    kaleidoscope::plugin::Qukeys::Qukeys_config_t Qukeys;
 
 //    MouseKeys_ mouseKeys;         /* addr. 0x001A */
-//
+    kaleidoscope::plugin::MouseKeys_::MouseKeys_config_t MouseKeys;
+
 //    uint8_t keyscan_interval_;    /* addr. 0x0024 */
 //
 //    Brightness brightness;        /* addr. 0x0025 */
@@ -96,7 +98,7 @@ static result_t _cfg_item_request_kbdmem_cb( kbdmem_item_type_t item_type, const
     volatile uint32_t legacy_settings = GET_OFFSET( config_cache.legacy_settings );
     volatile uint32_t fade_enabled = GET_OFFSET( &config_cache.fade_enabled );
     volatile uint32_t idleleds = GET_OFFSET( &config_cache.idleleds );
-    volatile uint32_t qukeys = GET_OFFSET( &config_cache.qukeys );
+    volatile uint32_t qukeys = GET_OFFSET( &config_cache.Qukeys );
 
     volatile uint32_t last_item = GET_OFFSET( &config_cache.last_item );
 
@@ -104,7 +106,13 @@ static result_t _cfg_item_request_kbdmem_cb( kbdmem_item_type_t item_type, const
     {
         case KBDMEM_ITEM_TYPE_QUKEYS:
 
-            *pp_item = &config_cache.qukeys;
+            *pp_item = &config_cache.Qukeys;
+
+            break;
+
+        case KBDMEM_ITEM_TYPE_MOUSEKEYS:
+
+            *pp_item = &config_cache.MouseKeys;
 
             break;
 
