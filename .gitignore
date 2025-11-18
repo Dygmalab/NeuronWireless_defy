@@ -43,6 +43,6 @@
 # Vscode project
 .vscode/
 cmake-build-debug/
-#compile_commands.json
+compile_commands.json
 
 *.idx
