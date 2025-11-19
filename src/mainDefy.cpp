@@ -57,7 +57,7 @@ extern "C"
 // Kaleidoscope
 #include "Kaleidoscope-Colormap.h"
 #include "Kaleidoscope-DynamicMacros.h"
-#include "Kaleidoscope-DynamicSuperKeys.h"
+#include "Kaleidoscope-KeyRoleManager.h"
 #include "Kaleidoscope-EEPROM-Keymap.h"
 #include "Kaleidoscope-FocusSerial.h"
 #include "Kaleidoscope-IdleLEDsDefy.h"
@@ -104,6 +104,7 @@ extern "C"
 #warning "<<<<<<<<< The project is not being built for production >>>>>>>>>"
 #endif
 
+#define MAX_LAYERS 10
 
 Watchdog_timer watchdog_timer;
 
@@ -348,12 +349,12 @@ static kaleidoscope::plugin::LEDStalkerDefy stalkerDefy{};
 KALEIDOSCOPE_INIT_PLUGINS
 (
     EEPROMSettings,
-    EEPROMKeymap, FirmwareVersion, FocusSettingsCommand, FocusEEPROMCommand, Upgrade,DynamicSuperKeys,
+    EEPROMKeymap, FirmwareVersion, FocusSettingsCommand, FocusEEPROMCommand, Upgrade,keyRoleManager,
     LEDControl, FocusLEDCommand,
     LEDPaletteThemeDefy, ColormapEffectDefy,
     LEDRainbowWaveEffectDefy, LEDRainbowEffectDefy, stalkerDefy, solidRedDefy,
     solidGreenDefy, solidBlueDefy, solidWhiteDefy, solidBlackDefy, batteryStatus,ledBluetoothPairingDefy,
-    IdleLEDsDefy,PersistentIdleDefyLEDs, KeyboardFocus, Qukeys, DynamicMacros,
+    IdleLEDsDefy,PersistentIdleDefyLEDs, KeyboardFocus, DynamicMacros,
     /*SideFlash,*/ Focus, MouseKeys, OneShot, LayerFocus,
     HostPowerManagement,Battery,
     /*BLE*/
@@ -392,10 +393,11 @@ void setup(void)
 
     // Kaleidoscope
     Kaleidoscope.setup();
-    EEPROMKeymap.setup(10);            // Reserve space in the keyboard's EEPROM(flash memory) for the keymaps.
-    ColormapEffectDefy.max_layers(10); // Reserve space for the number of Colormap layers we will use.
+    EEPROMKeymap.setup(MAX_LAYERS);            // Reserve space in the keyboard's EEPROM(flash memory) for the keymaps.
+    ColormapEffectDefy.max_layers(MAX_LAYERS); // Reserve space for the number of Colormap layers we will use.
     // DefaultColormap.setup();
-    DynamicSuperKeys.setup(0, 1024);
+    //SuperkeysHandler.setup(); // Initialize the SuperkeysHandler plugin.
+    keyRoleManager.setup_superkeys(MAX_LAYERS);   // Initialize the keyRoleManager plugin.
     DynamicMacros.reserve_storage(2048);
 
     // Keep the HID begin after the Kaleidoscope setup.
