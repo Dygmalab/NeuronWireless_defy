@@ -18,6 +18,7 @@
 
 #include "configuration.h"
 #include "Config_manager.h"
+#include "FirmwareVersion.h"
 #include "LEDManager.h"
 #include "MouseKeysDygma.h"
 #include "QukeysDygma.h"
@@ -42,7 +43,8 @@ typedef struct PACK
     LEDManager::brightness_conf_t brightness;
 
 //    Specification specification;  /* addr. 0x002A */  // settings_base_ = kaleidoscope::plugin::EEPROMSettings::requestSlice((sizeof(specifications_left_side)*2)); //multiply by 2
-//
+    FirmwareVersion::device_spec_t device_spec;
+
 //    uint8_t bat_saving_mode;      /* addr. 0x007A */  // settings_saving_ = ::EEPROMSettings.requestSlice(sizeof(saving_mode));
 //
 //    Ble_flash_data ble_flash_data;/* addr. 0x007B */  // flash_base_addr = kaleidoscope::plugin::EEPROMSettings::requestSlice(sizeof(ble_flash_data));
@@ -69,6 +71,12 @@ static result_t _cfg_item_request_cb( ConfigManager::cfg_item_type_t item_type, 
 {
     switch( item_type )
     {
+        case ConfigManager::CFG_ITEM_TYPE_DEVICE_SPEC:
+
+            *pp_item = &config_cache.device_spec;
+
+            break;
+
         case ConfigManager::CFG_ITEM_TYPE_LEDS_FADE_EFFECT:
 
             *pp_item = &config_cache.fade_enabled;
@@ -108,6 +116,7 @@ static result_t _cfg_item_request_kbdmem_cb( kbdmem_item_type_t item_type, const
     volatile uint32_t qukeys = GET_OFFSET( &config_cache.Qukeys );
     volatile uint32_t mousekeys = GET_OFFSET( &config_cache.MouseKeys );
     volatile uint32_t brightness = GET_OFFSET( &config_cache.brightness );
+    volatile uint32_t device_spec = GET_OFFSET( &config_cache.device_spec );
 
     volatile uint32_t last_item = GET_OFFSET( &config_cache.last_item );
 

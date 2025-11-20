@@ -53,8 +53,26 @@ class FirmwareVersion
         Wired
     };
 
+    typedef struct PACK
+    {
+        uint8_t device_name;
+        uint8_t configuration;
+        uint8_t connection;
+        uint8_t reserve1[5];            /* Additional space to fit the legacy memory alignment */
+        uint64_t rf_gateway_chip_id;
+        char chip_id_rp2040[20];
+        uint8_t reserve2[4];            /* Additional space to fit the legacy memory alignment */
+    } keyscanner_spec_t;
+
+    typedef struct PACK
+    {
+        keyscanner_spec_t ks_left;
+        keyscanner_spec_t ks_right;
+    } device_spec_t;
+
     static Device get_layout();
 
+#warning "Remove this when the EEPROM is solved"
     struct Specifications{
         uint8_t device_name;
         uint8_t configuration;
@@ -62,17 +80,17 @@ class FirmwareVersion
         uint64_t rf_gateway_chip_id;
         char chip_id_rp2040[20];
 
-        void reset(void)
-        {
-            configuration = static_cast<uint8_t>(Device::ANSI);
-            device_name = static_cast<uint8_t>(Device::Raise2);
-            connection = static_cast<uint8_t>(Device::Wired);
-            rf_gateway_chip_id = 0;
-            for (int i = 0; i < 20 ; ++i)
-            {
-                chip_id_rp2040[i] = '0';
-            }
-        }
+//        void reset(void)
+//        {
+//            configuration = static_cast<uint8_t>(Device::ANSI);
+//            device_name = static_cast<uint8_t>(Device::Raise2);
+//            connection = static_cast<uint8_t>(Device::Wired);
+//            rf_gateway_chip_id = 0;
+//            for (int i = 0; i < 20 ; ++i)
+//            {
+//                chip_id_rp2040[i] = '0';
+//            }
+//        }
     };
 
 
@@ -83,6 +101,8 @@ class FirmwareVersion
     static bool keyboard_is_wireless();
 
   private:
+    static const device_spec_t * p_device_spec;
+
     kbdif_t * p_kbdif = NULL;
     result_t kbdif_initialize(void);
 
@@ -117,6 +137,9 @@ class FirmwareVersion
 
     static const kbdif_handlers_t kbdif_handlers;
     static kbdapi_event_result_t kbdif_command_event_cb( void * p_instance, const char * p_command );
+
+    static void cfgmem_keyscanner_spec_left_save( const keyscanner_spec_t * p_spec );
+    static void cfgmem_keyscanner_spec_right_save( const keyscanner_spec_t * p_spec );
 };
 
 extern class FirmwareVersion FirmwareVersion;
