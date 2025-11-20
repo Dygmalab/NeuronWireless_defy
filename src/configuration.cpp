@@ -45,8 +45,8 @@ typedef struct PACK
 //    Specification specification;  /* addr. 0x002A */  // settings_base_ = kaleidoscope::plugin::EEPROMSettings::requestSlice((sizeof(specifications_left_side)*2)); //multiply by 2
     FirmwareVersion::device_spec_t device_spec;
 
-//    uint8_t bat_saving_mode;      /* addr. 0x007A */  // settings_saving_ = ::EEPROMSettings.requestSlice(sizeof(saving_mode));
-//
+    uint8_t bat_saving_mode;        /* addr. 0x007A */  // settings_saving_ = ::EEPROMSettings.requestSlice(sizeof(saving_mode));
+
 //    Ble_flash_data ble_flash_data;/* addr. 0x007B */  // flash_base_addr = kaleidoscope::plugin::EEPROMSettings::requestSlice(sizeof(ble_flash_data));
 //
 //    uint8_t power_rf;             /* addr. 0x0165 */  // settings_base_ = kaleidoscope::plugin::EEPROMSettings::requestSlice(sizeof(power_rf));
@@ -95,6 +95,12 @@ static result_t _cfg_item_request_cb( ConfigManager::cfg_item_type_t item_type, 
 
             break;
 
+        case ConfigManager::CFG_ITEM_TYPE_BAT_SAVING_MODE:
+
+            *pp_item = &config_cache.bat_saving_mode;
+
+            break;
+
         default:
 
             ASSERT_DYGMA( false, "Invalid KBDMEM item requested" );
@@ -117,6 +123,7 @@ static result_t _cfg_item_request_kbdmem_cb( kbdmem_item_type_t item_type, const
     volatile uint32_t mousekeys = GET_OFFSET( &config_cache.MouseKeys );
     volatile uint32_t brightness = GET_OFFSET( &config_cache.brightness );
     volatile uint32_t device_spec = GET_OFFSET( &config_cache.device_spec );
+    volatile uint32_t bat_saving_mode = GET_OFFSET( &config_cache.bat_saving_mode );
 
     volatile uint32_t last_item = GET_OFFSET( &config_cache.last_item );
 
