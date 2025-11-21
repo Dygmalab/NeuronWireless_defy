@@ -23,6 +23,7 @@
 #include "LEDManager.h"
 #include "MouseKeysDygma.h"
 #include "QukeysDygma.h"
+#include "Radio_manager.h"
 
 typedef struct PACK
 {
@@ -52,7 +53,9 @@ typedef struct PACK
     BleManager::connections_config_t ble_connections;
 
 //    uint8_t power_rf;             /* addr. 0x0165 */  // settings_base_ = kaleidoscope::plugin::EEPROMSettings::requestSlice(sizeof(power_rf));
-//
+    RadioManager::rf_config_t rf;
+
+
 //    Keymap keymap;                /* addr. 0x0166 */  // keymap_base_ = ::EEPROMSettings.requestSlice(max_layers_ * Runtime.device().numKeys() * 2);
 //
 //    Palette palette;              /* addr. 0x07A6 */  // palette_memory_pos = ::EEPROMSettings.requestSlice( palette_color_cnt * color_size );
@@ -109,6 +112,12 @@ static result_t _cfg_item_request_cb( ConfigManager::cfg_item_type_t item_type, 
 
             break;
 
+        case ConfigManager::CFG_ITEM_TYPE_RF:
+
+            *pp_item = &config_cache.rf;
+
+            break;
+
         default:
 
             ASSERT_DYGMA( false, "Invalid KBDMEM item requested" );
@@ -133,6 +142,7 @@ static result_t _cfg_item_request_kbdmem_cb( kbdmem_item_type_t item_type, const
     volatile uint32_t device_spec = GET_OFFSET( &config_cache.device_spec );
     volatile uint32_t bat_saving_mode = GET_OFFSET( &config_cache.bat_saving_mode );
     volatile uint32_t ble_connections = GET_OFFSET( &config_cache.ble_connections );
+    volatile uint32_t rf = GET_OFFSET( &config_cache.rf );
 
     volatile uint32_t last_item = GET_OFFSET( &config_cache.last_item );
 
