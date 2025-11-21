@@ -16,6 +16,7 @@
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "Ble_manager.h"
 #include "configuration.h"
 #include "Config_manager.h"
 #include "FirmwareVersion.h"
@@ -48,7 +49,8 @@ typedef struct PACK
     uint8_t bat_saving_mode;        /* addr. 0x007A */  // settings_saving_ = ::EEPROMSettings.requestSlice(sizeof(saving_mode));
 
 //    Ble_flash_data ble_flash_data;/* addr. 0x007B */  // flash_base_addr = kaleidoscope::plugin::EEPROMSettings::requestSlice(sizeof(ble_flash_data));
-//
+    BleManager::connections_config_t ble_connections;
+
 //    uint8_t power_rf;             /* addr. 0x0165 */  // settings_base_ = kaleidoscope::plugin::EEPROMSettings::requestSlice(sizeof(power_rf));
 //
 //    Keymap keymap;                /* addr. 0x0166 */  // keymap_base_ = ::EEPROMSettings.requestSlice(max_layers_ * Runtime.device().numKeys() * 2);
@@ -101,6 +103,12 @@ static result_t _cfg_item_request_cb( ConfigManager::cfg_item_type_t item_type, 
 
             break;
 
+        case ConfigManager::CFG_ITEM_TYPE_BLE_CONNECTIONS:
+
+            *pp_item = &config_cache.ble_connections;
+
+            break;
+
         default:
 
             ASSERT_DYGMA( false, "Invalid KBDMEM item requested" );
@@ -124,6 +132,7 @@ static result_t _cfg_item_request_kbdmem_cb( kbdmem_item_type_t item_type, const
     volatile uint32_t brightness = GET_OFFSET( &config_cache.brightness );
     volatile uint32_t device_spec = GET_OFFSET( &config_cache.device_spec );
     volatile uint32_t bat_saving_mode = GET_OFFSET( &config_cache.bat_saving_mode );
+    volatile uint32_t ble_connections = GET_OFFSET( &config_cache.ble_connections );
 
     volatile uint32_t last_item = GET_OFFSET( &config_cache.last_item );
 
