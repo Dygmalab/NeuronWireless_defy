@@ -176,6 +176,11 @@ result_t configuration_init( void )
     return RESULT_OK;
 }
 
+void configuration_save( void )
+{
+    ConfigManager.config_save_now();
+}
+
 void configuration_run()
 {
     ConfigManager.run();

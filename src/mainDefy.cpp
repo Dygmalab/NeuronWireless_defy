@@ -485,6 +485,8 @@ void reset_mcu(void)
         yield();  // Meanwhile execute tasks.
     }
 
+    configuration_save();
+
     if (EEPROM.getNeedUpdate())
     {
         watchdog_timer.reset();
