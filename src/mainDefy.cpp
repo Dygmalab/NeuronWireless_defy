@@ -59,7 +59,7 @@ extern "C"
 //#include "Kaleidoscope-Colormap.h"
 #include "Kaleidoscope-DynamicMacros.h"
 #include "Kaleidoscope-DynamicSuperKeys.h"
-#include "Kaleidoscope-EEPROM-Keymap.h"
+//#include "Kaleidoscope-EEPROM-Keymap.h"
 //#include "Kaleidoscope-FocusSerial.h"
 //#include "Kaleidoscope-IdleLEDsDefy.h"
 //#include "Kaleidoscope-LayerFocus.h"
@@ -104,6 +104,7 @@ extern "C"
 #include "Battery.h"
 #include "Ble_manager.h"
 #include "configuration.h"
+#include "EEPROMKeymapDygma.h"
 #include "LEDDevice-Remote.h"
 #include "LEDManager.h"
 #include "LEDPaletteRGBW.h"
@@ -323,7 +324,7 @@ static result_t LEDManager_init(void)
     config.p_LEDPalette = &LEDPaletteRGBW;
 
     config.p_LEDDevice_list = &LEDDevice_list;
-    config.layers_count = 10;
+    config.layers_count = LAYERS_COUNT;
 
     result = LEDManager.init( config );
     ASSERT_DYGMA( result == RESULT_OK, "LEDManager.init failed!" );
@@ -385,7 +386,7 @@ void setup(void)
     ASSERT_DYGMA( result == RESULT_OK, "Upgrade.init failed!" );
 
     // Kaleidoscope
-    EEPROMKeymap.setup(10);            // Reserve space in the keyboard's EEPROM(flash memory) for the keymaps.
+    EEPROMKeymap.setup();            // Reserve space in the keyboard's EEPROM(flash memory) for the keymaps.
 
     // LED Manager
     result = LEDManager_init();

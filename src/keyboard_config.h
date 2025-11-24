@@ -64,6 +64,9 @@
     21 + key_matrix_leds,                                                                                                                                                                                 \
     27, 28, 29, 30, 31, 32, 33, 34, 34 + key_matrix_leds, 33 + key_matrix_leds, 32 + key_matrix_leds, 31 + key_matrix_leds, 30 + key_matrix_leds, 29 + key_matrix_leds, 28 + key_matrix_leds, 27 + key_matrix_leds}
 
+// Layers definition
+#define LAYERS_COUNT    10
+
 // Matrix definitions
 #define MATRIX_ROWS 5
 #define MATRIX_COLS 16
