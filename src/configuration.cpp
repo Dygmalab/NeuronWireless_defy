@@ -22,6 +22,7 @@
 #include "EEPROMKeymapDygma.h"
 #include "FirmwareVersion.h"
 #include "LEDManager.h"
+#include "LEDPaletteRGBW.h"
 #include "MouseKeysDygma.h"
 #include "QukeysDygma.h"
 #include "Radio_manager.h"
@@ -60,7 +61,8 @@ typedef struct PACK
     kaleidoscope::plugin::EEPROMKeymap::keymap_config_t keymap;
 
 //    Palette palette;              /* addr. 0x07A6 */  // palette_memory_pos = ::EEPROMSettings.requestSlice( palette_color_cnt * color_size );
-//
+    LEDPaletteRGBW::palette_config_t palette;
+
 //    Colormap colormap;            /* addr. 0x07E6 */  //colormap_memory_pos = ::EEPROMSettings.requestSlice( colormap_memory_size );
 //
 //    Superkeys superkeys;          /* addr. 0x0B60 */  // storage_base_ = ::EEPROMSettings.requestSlice(size + 8);
@@ -98,6 +100,12 @@ static result_t _cfg_item_request_cb( ConfigManager::cfg_item_type_t item_type, 
         case ConfigManager::CFG_ITEM_TYPE_LEDS_BRIGHTNESS:
 
             *pp_item = &config_cache.brightness;
+
+            break;
+
+        case ConfigManager::CFG_ITEM_TYPE_LEDS_PALETTE:
+
+            *pp_item = &config_cache.palette;
 
             break;
 
@@ -145,6 +153,7 @@ static result_t _cfg_item_request_kbdmem_cb( kbdmem_item_type_t item_type, const
     volatile uint32_t ble_connections = GET_OFFSET( &config_cache.ble_connections );
     volatile uint32_t rf = GET_OFFSET( &config_cache.rf );
     volatile uint32_t keymap = GET_OFFSET( &config_cache.keymap );
+    volatile uint32_t palette = GET_OFFSET( &config_cache.palette );
 
     volatile uint32_t last_item = GET_OFFSET( &config_cache.last_item );
 
