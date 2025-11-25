@@ -126,11 +126,11 @@ Watchdog_timer watchdog_timer;
 static class LEDPaletteRGBW LEDPaletteRGBW;
 
 /* LED Device List */
-static LEDDeviceRemote LEDDeviceLeftBL( LEDDevice::LED_DEVICE_TYPE_LEFT_BL, LEDS_HAND_LEFT );
-static LEDDeviceRemote LEDDeviceLeftUG( LEDDevice::LED_DEVICE_TYPE_LEFT_UG, UNDERGLOW_LEDS_LEFT_SIDE );
-static LEDDeviceRemote LEDDeviceRightBL( LEDDevice::LED_DEVICE_TYPE_RIGHT_BL, LEDS_HAND_RIGHT );
-static LEDDeviceRemote LEDDeviceRightUG( LEDDevice::LED_DEVICE_TYPE_RIGHT_UG, UNDERGLOW_LEDS_RIGHT_SIDE );
-static LEDDevice       LEDDeviceNeuron( LEDDevice::LED_DEVICE_TYPE_NEURON, NEURON_LED );
+static LEDDeviceRemote LEDDeviceLeftBL( LEDDevice::LED_DEVICE_TYPE_LEFT_BL, APP_LEDS_BL_LEFT_CNT );
+static LEDDeviceRemote LEDDeviceLeftUG( LEDDevice::LED_DEVICE_TYPE_LEFT_UG, APP_LEDS_UG_LEFT_CNT );
+static LEDDeviceRemote LEDDeviceRightBL( LEDDevice::LED_DEVICE_TYPE_RIGHT_BL, APP_LEDS_BL_RIGHT_CNT );
+static LEDDeviceRemote LEDDeviceRightUG( LEDDevice::LED_DEVICE_TYPE_RIGHT_UG, APP_LEDS_UG_RIGHT_CNT );
+static LEDDevice       LEDDeviceNeuron( LEDDevice::LED_DEVICE_TYPE_NEURON, APP_LEDS_NEURON_CNT );
 
 static LEDDevice_list_t LEDDevice_list =
 {
