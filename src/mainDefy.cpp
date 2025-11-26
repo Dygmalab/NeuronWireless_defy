@@ -324,7 +324,7 @@ static result_t LEDManager_init(void)
     config.p_LEDPalette = &LEDPaletteRGBW;
 
     config.p_LEDDevice_list = &LEDDevice_list;
-    config.layers_count = LAYERS_COUNT;
+    config.layers_count = APP_LAYERS_CNT;
 
     result = LEDManager.init( config );
     ASSERT_DYGMA( result == RESULT_OK, "LEDManager.init failed!" );

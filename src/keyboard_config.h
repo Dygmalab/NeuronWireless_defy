@@ -28,8 +28,6 @@
 #define SHORT_NAME "defy_wireless"
 
 // LED definitions
-#define KEY_MATRIX_LEDS 35
-
 #define APP_LEDS_BL_LEFT_CNT 35     /* The project's number of left-side backlight leds */
 #define APP_LEDS_UG_LEFT_CNT 53     /* The project's number of left-side underglow leds */
 #define APP_LEDS_BL_RIGHT_CNT 35    /* The project's number of right-side backlight leds */
@@ -71,7 +69,7 @@
     27, 28, 29, 30, 31, 32, 33, 34, 34 + key_matrix_leds, 33 + key_matrix_leds, 32 + key_matrix_leds, 31 + key_matrix_leds, 30 + key_matrix_leds, 29 + key_matrix_leds, 28 + key_matrix_leds, 27 + key_matrix_leds}
 
 // Layers definition
-#define LAYERS_COUNT    10
+#define APP_LAYERS_CNT    10
 
 // Matrix definitions
 #define MATRIX_ROWS 5
