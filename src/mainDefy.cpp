@@ -322,9 +322,7 @@ static result_t LEDManager_init(void)
     LEDManager::LEDManager_config_t config;
 
     config.p_LEDPalette = &LEDPaletteRGBW;
-
     config.p_LEDDevice_list = &LEDDevice_list;
-    config.layers_count = APP_LAYERS_CNT;
 
     result = LEDManager.init( config );
     ASSERT_DYGMA( result == RESULT_OK, "LEDManager.init failed!" );

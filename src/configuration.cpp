@@ -21,6 +21,7 @@
 #include "Config_manager.h"
 #include "EEPROMKeymapDygma.h"
 #include "FirmwareVersion.h"
+#include "LEDLayers.h"
 #include "LEDManager.h"
 #include "LEDPaletteRGBW.h"
 #include "MouseKeysDygma.h"
@@ -64,7 +65,8 @@ typedef struct PACK
     LEDPaletteRGBW::palette_config_t palette;
 
 //    Colormap colormap;            /* addr. 0x07E6 */  //colormap_memory_pos = ::EEPROMSettings.requestSlice( colormap_memory_size );
-//
+    LEDLayers::colormap_config_t colormap;
+
 //    Superkeys superkeys;          /* addr. 0x0B60 */  // storage_base_ = ::EEPROMSettings.requestSlice(size + 8);
 //
 //    Macros macros;                /* addr. 0x0F68 */  // storage_base_ = ::EEPROMSettings.requestSlice(size);
@@ -106,6 +108,12 @@ static result_t _cfg_item_request_cb( ConfigManager::cfg_item_type_t item_type, 
         case ConfigManager::CFG_ITEM_TYPE_LEDS_PALETTE:
 
             *pp_item = &config_cache.palette;
+
+            break;
+
+        case ConfigManager::CFG_ITEM_TYPE_LEDS_COLORMAP:
+
+            *pp_item = &config_cache.colormap;
 
             break;
 
@@ -154,6 +162,7 @@ static result_t _cfg_item_request_kbdmem_cb( kbdmem_item_type_t item_type, const
     volatile uint32_t rf = GET_OFFSET( &config_cache.rf );
     volatile uint32_t keymap = GET_OFFSET( &config_cache.keymap );
     volatile uint32_t palette = GET_OFFSET( &config_cache.palette );
+    volatile uint32_t colormap = GET_OFFSET( &config_cache.colormap );
 
     volatile uint32_t last_item = GET_OFFSET( &config_cache.last_item );
 
