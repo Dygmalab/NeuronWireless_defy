@@ -407,6 +407,7 @@ void loop()
     Kaleidoscope.loop();
     Communications.run();
     BleManager.run();
+    Battery.run();
     Upgrade.run();
 //    protocolBreathe();    /* (Commented in Nov 2025) See the note above */
     EEPROM.timer_update_periodically_run(1000);  // Check if it is necessary to write the eeprom every 1000 ms.
