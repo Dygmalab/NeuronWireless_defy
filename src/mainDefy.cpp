@@ -58,7 +58,7 @@ extern "C"
 // Kaleidoscope
 //#include "Kaleidoscope-Colormap.h"
 #include "Kaleidoscope-DynamicMacros.h"
-#include "Kaleidoscope-DynamicSuperKeys.h"
+#include "Kaleidoscope-KeyRoleManager.h"
 //#include "Kaleidoscope-EEPROM-Keymap.h"
 //#include "Kaleidoscope-FocusSerial.h"
 //#include "Kaleidoscope-IdleLEDsDefy.h"
@@ -115,6 +115,7 @@ extern "C"
 #warning "<<<<<<<<< The project is not being built for production >>>>>>>>>"
 #endif
 
+#define MAX_LAYERS 10
 
 Watchdog_timer watchdog_timer;
 
@@ -384,13 +385,15 @@ void setup(void)
     ASSERT_DYGMA( result == RESULT_OK, "Upgrade.init failed!" );
 
     // Kaleidoscope
+#warning "This is ready to be removed"
     EEPROMKeymap.setup();            // Reserve space in the keyboard's EEPROM(flash memory) for the keymaps.
 
     // LED Manager
     result = LEDManager_init();
     ASSERT_DYGMA( result == RESULT_OK, "LEDManager_init failed!" );
 
-    DynamicSuperKeys.setup(0, 1024);
+    //SuperkeysHandler.setup(); // Initialize the SuperkeysHandler plugin.
+    keyRoleManager.setup_superkeys(MAX_LAYERS);   // Initialize the keyRoleManager plugin.
     DynamicMacros.reserve_storage(2048);
 
     // Keep the HID begin after the Kaleidoscope setup.
