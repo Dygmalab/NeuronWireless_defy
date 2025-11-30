@@ -28,6 +28,7 @@
 #include "MouseKeysDygma.h"
 #include "QukeysDygma.h"
 #include "Radio_manager.h"
+#include "SuperkeysHandler.h"
 
 typedef struct PACK
 {
@@ -70,6 +71,7 @@ typedef struct PACK
 
 //    Superkeys superkeys;          /* addr. 0x0B60 */  // storage_base_ = ::EEPROMSettings.requestSlice(size + 8);
     kaleidoscope::plugin::KeyRoleManager::keyrole_config_t keyrole;
+    kaleidoscope::plugin::SuperkeysHandler::superkey_config_t superkey;
 
 //    Macros macros;                /* addr. 0x0F68 */  // storage_base_ = ::EEPROMSettings.requestSlice(size);
 
@@ -166,6 +168,7 @@ static result_t _cfg_item_request_kbdmem_cb( kbdmem_item_type_t item_type, const
     volatile uint32_t palette = GET_OFFSET( &config_cache.palette );
     volatile uint32_t colormap = GET_OFFSET( &config_cache.colormap );
     volatile uint32_t keyrole = GET_OFFSET( &config_cache.keyrole );
+    volatile uint32_t superkey = GET_OFFSET( &config_cache.superkey );
 
     volatile uint32_t last_item = GET_OFFSET( &config_cache.last_item );
 
@@ -193,6 +196,12 @@ static result_t _cfg_item_request_kbdmem_cb( kbdmem_item_type_t item_type, const
         case KBDMEM_ITEM_TYPE_KEYROLE:
 
             *pp_item = &config_cache.keyrole;
+
+            break;
+
+        case KBDMEM_ITEM_TYPE_SUPERKEY:
+
+            *pp_item = &config_cache.superkey;
 
             break;
 
