@@ -21,6 +21,7 @@
 #include "Config_manager.h"
 #include "EEPROMKeymapDygma.h"
 #include "FirmwareVersion.h"
+#include "KeyRoleManager.h"
 #include "LEDLayers.h"
 #include "LEDManager.h"
 #include "LEDPaletteRGBW.h"
@@ -68,7 +69,8 @@ typedef struct PACK
     LEDLayers::colormap_config_t colormap;
 
 //    Superkeys superkeys;          /* addr. 0x0B60 */  // storage_base_ = ::EEPROMSettings.requestSlice(size + 8);
-//
+    kaleidoscope::plugin::KeyRoleManager::keyrole_config_t keyrole;
+
 //    Macros macros;                /* addr. 0x0F68 */  // storage_base_ = ::EEPROMSettings.requestSlice(size);
 
 #warning "Test"
@@ -163,6 +165,7 @@ static result_t _cfg_item_request_kbdmem_cb( kbdmem_item_type_t item_type, const
     volatile uint32_t keymap = GET_OFFSET( &config_cache.keymap );
     volatile uint32_t palette = GET_OFFSET( &config_cache.palette );
     volatile uint32_t colormap = GET_OFFSET( &config_cache.colormap );
+    volatile uint32_t keyrole = GET_OFFSET( &config_cache.keyrole );
 
     volatile uint32_t last_item = GET_OFFSET( &config_cache.last_item );
 
@@ -184,6 +187,12 @@ static result_t _cfg_item_request_kbdmem_cb( kbdmem_item_type_t item_type, const
         case KBDMEM_ITEM_TYPE_KEYMAP:
 
             *pp_item = &config_cache.keymap;
+
+            break;
+
+        case KBDMEM_ITEM_TYPE_KEYROLE:
+
+            *pp_item = &config_cache.keyrole;
 
             break;
 
