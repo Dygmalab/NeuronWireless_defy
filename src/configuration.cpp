@@ -19,6 +19,7 @@
 #include "Ble_manager.h"
 #include "configuration.h"
 #include "Config_manager.h"
+#include "DynamicMacrosDygma.h"
 #include "EEPROMKeymapDygma.h"
 #include "FirmwareVersion.h"
 #include "KeyRoleManager.h"
@@ -74,6 +75,7 @@ typedef struct PACK
     kaleidoscope::plugin::SuperkeysHandler::superkey_config_t superkey;
 
 //    Macros macros;                /* addr. 0x0F68 */  // storage_base_ = ::EEPROMSettings.requestSlice(size);
+    kaleidoscope::plugin::DynamicMacros::macros_config_t macros;
 
 #warning "Test"
     uint8_t last_item;
@@ -169,6 +171,7 @@ static result_t _cfg_item_request_kbdmem_cb( kbdmem_item_type_t item_type, const
     volatile uint32_t colormap = GET_OFFSET( &config_cache.colormap );
     volatile uint32_t keyrole = GET_OFFSET( &config_cache.keyrole );
     volatile uint32_t superkey = GET_OFFSET( &config_cache.superkey );
+    volatile uint32_t macros = GET_OFFSET( &config_cache.macros );
 
     volatile uint32_t last_item = GET_OFFSET( &config_cache.last_item );
 
@@ -202,6 +205,12 @@ static result_t _cfg_item_request_kbdmem_cb( kbdmem_item_type_t item_type, const
         case KBDMEM_ITEM_TYPE_SUPERKEY:
 
             *pp_item = &config_cache.superkey;
+
+            break;
+
+        case KBDMEM_ITEM_TYPE_MACROS:
+
+            *pp_item = &config_cache.macros;
 
             break;
 

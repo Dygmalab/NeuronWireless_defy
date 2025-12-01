@@ -57,7 +57,7 @@ extern "C"
 
 // Kaleidoscope
 //#include "Kaleidoscope-Colormap.h"
-#include "Kaleidoscope-DynamicMacros.h"
+//#include "Kaleidoscope-DynamicMacros.h"
 #include "Kaleidoscope-KeyRoleManager.h"
 //#include "Kaleidoscope-EEPROM-Keymap.h"
 //#include "Kaleidoscope-FocusSerial.h"
@@ -104,6 +104,7 @@ extern "C"
 #include "Battery.h"
 #include "Ble_manager.h"
 #include "configuration.h"
+#include "DynamicMacrosDygma.h"
 #include "EEPROMKeymapDygma.h"
 #include "LEDDevice-Remote.h"
 #include "LEDManager.h"
@@ -392,7 +393,7 @@ void setup(void)
 
     //SuperkeysHandler.setup(); // Initialize the SuperkeysHandler plugin.
     keyRoleManager.setup_superkeys();   // Initialize the keyRoleManager plugin.
-    DynamicMacros.reserve_storage(2048);
+    DynamicMacros.reserve_storage();
 
     // Keep the HID begin after the Kaleidoscope setup.
     HID().begin();

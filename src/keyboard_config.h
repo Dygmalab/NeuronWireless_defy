@@ -71,6 +71,9 @@
 // Layers definition
 #define APP_LAYERS_CNT    10
 
+// Macros definition
+#define APP_MACROS_MEMORY_SIZE  2048
+
 // Matrix definitions
 #define MATRIX_ROWS 5
 #define MATRIX_COLS 16

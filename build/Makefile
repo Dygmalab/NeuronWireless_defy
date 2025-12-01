@@ -411,6 +411,7 @@ SRCSC += $(KEYBOARD_API_ROOT_DIR)/keyboard_api.c
 # Kaleidoscope FAL (Framework Abstraction Layer)
 SRCSCXX += $(KALEIDOSCOPE_ADAPTER_ROOT_DIR)/fal/ll/kbdfal_ll_base.cpp
 SRCSCXX += $(KALEIDOSCOPE_ADAPTER_ROOT_DIR)/fal/ll/kbdfal_ll_memory.cpp
+SRCSCXX += $(KALEIDOSCOPE_ADAPTER_ROOT_DIR)/plugins/DynamicMacrosDygma.cpp
 SRCSCXX += $(KALEIDOSCOPE_ADAPTER_ROOT_DIR)/plugins/EEPROMKeymapDygma.cpp
 SRCSCXX += $(KALEIDOSCOPE_ADAPTER_ROOT_DIR)/plugins/IdleLedsDygma.cpp
 SRCSCXX += $(KALEIDOSCOPE_ADAPTER_ROOT_DIR)/plugins/KbdInterface.cpp
@@ -426,7 +427,6 @@ SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/device/dygma/keyboardManage
 
 SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/key_events.cpp
 SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/layers.cpp
-SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/plugin/DynamicMacros.cpp
 
 SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/plugin/SuperkeysHandler.cpp
 SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/plugin/KeyRoleManager.cpp
