@@ -115,8 +115,6 @@ extern "C"
 #warning "<<<<<<<<< The project is not being built for production >>>>>>>>>"
 #endif
 
-#define MAX_LAYERS 10
-
 Watchdog_timer watchdog_timer;
 
 /*****************************************************/
@@ -393,7 +391,7 @@ void setup(void)
     ASSERT_DYGMA( result == RESULT_OK, "LEDManager_init failed!" );
 
     //SuperkeysHandler.setup(); // Initialize the SuperkeysHandler plugin.
-    keyRoleManager.setup_superkeys(MAX_LAYERS);   // Initialize the keyRoleManager plugin.
+    keyRoleManager.setup_superkeys();   // Initialize the keyRoleManager plugin.
     DynamicMacros.reserve_storage(2048);
 
     // Keep the HID begin after the Kaleidoscope setup.
