@@ -19,7 +19,6 @@
 #include "FirmwareVersion.h"
 #include "Config_manager.h"
 #include "Communications.h"
-#include "Kaleidoscope-EEPROM-Settings.h"
 #include "Kaleidoscope-FocusSerial.h"
 #include "Kaleidoscope.h"
 //#include "nrf_log.h"
@@ -36,7 +35,6 @@
 
 # define base16char(i) ("0123456789ABCDEF"[i])
 
-    uint16_t FirmwareVersion::settings_base_ = 0;
     const FirmwareVersion::device_spec_t * FirmwareVersion::p_device_spec = nullptr;
 
 //At the end of the function we need to know if the specifications are different from the ones stored in memory.
@@ -80,8 +78,6 @@ result_t FirmwareVersion::init()
 
     result = ConfigManager.config_item_request( ConfigManager::CFG_ITEM_TYPE_DEVICE_SPEC, (const void **)&p_device_spec );
     EXIT_IF_ERR( result, "ConfigManager.config_item_request failed" );
-
-    settings_base_ = kaleidoscope::plugin::EEPROMSettings::requestSlice((sizeof(struct Specifications)*2)); //multiply by 2
 
     // because we have two specification structures.
     Communications.callbacks.bind(CONFIGURATION, (

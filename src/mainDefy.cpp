@@ -105,7 +105,6 @@ extern "C"
 #include "Ble_manager.h"
 #include "configuration.h"
 #include "DynamicMacrosDygma.h"
-#include "EEPROMKeymapDygma.h"
 #include "LEDDevice-Remote.h"
 #include "LEDManager.h"
 #include "LEDPaletteRGBW.h"
@@ -382,10 +381,6 @@ void setup(void)
     // Keyscanner Upgrade module
     result = Upgrade.init();
     ASSERT_DYGMA( result == RESULT_OK, "Upgrade.init failed!" );
-
-    // Kaleidoscope
-#warning "This is ready to be removed"
-    EEPROMKeymap.setup();            // Reserve space in the keyboard's EEPROM(flash memory) for the keymaps.
 
     // LED Manager
     result = LEDManager_init();

@@ -72,28 +72,6 @@ class FirmwareVersion
 
     static Device get_layout();
 
-#warning "Remove this when the EEPROM is solved"
-    struct Specifications{
-        uint8_t device_name;
-        uint8_t configuration;
-        uint8_t connection;
-        uint64_t rf_gateway_chip_id;
-        char chip_id_rp2040[20];
-
-//        void reset(void)
-//        {
-//            configuration = static_cast<uint8_t>(Device::ANSI);
-//            device_name = static_cast<uint8_t>(Device::Raise2);
-//            connection = static_cast<uint8_t>(Device::Wired);
-//            rf_gateway_chip_id = 0;
-//            for (int i = 0; i < 20 ; ++i)
-//            {
-//                chip_id_rp2040[i] = '0';
-//            }
-//        }
-    };
-
-
     /*
      * @brief Get the connection type
      * @return true if the connection is wireless, false if it is wired
@@ -107,7 +85,6 @@ class FirmwareVersion
     result_t kbdif_initialize(void);
 
   private:
-    static uint16_t settings_base_;
 
     enum request_t {
         LAYOUT,
