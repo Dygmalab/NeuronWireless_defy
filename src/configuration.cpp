@@ -31,7 +31,7 @@
 #include "Radio_manager.h"
 #include "SuperkeysHandler.h"
 
-typedef struct PACK
+typedef struct PACK __attribute__((aligned(4)))
 {
 #warning "Put the uint8_t variables to the respective modules' config structures."
 
