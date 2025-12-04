@@ -176,6 +176,8 @@ static result_t _cfg_item_request_kbdmem_cb( kbdmem_item_type_t item_type, const
 
 result_t configuration_init( void )
 {
+    result_t result = RESULT_ERR;
+
     ConfigManager::ConfigManager_config_t config;
 
     config.p_config_cache = (uint8_t *)&config_cache;
@@ -185,9 +187,11 @@ result_t configuration_init( void )
     config.item_request_cb = _cfg_item_request_cb;
     config.item_request_kbdmem_cb = _cfg_item_request_kbdmem_cb;
 
-    ConfigManager.init( &config );
+    result = ConfigManager.init( &config );
+    EXIT_IF_ERR( result, "ConfigManager.init failed" );
 
-    return RESULT_OK;
+_EXIT:
+    return result;
 }
 
 void configuration_save( void )

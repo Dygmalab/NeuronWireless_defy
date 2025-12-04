@@ -184,10 +184,7 @@ void app_error_fault_handler(uint32_t id, uint32_t pc, uint32_t info)  // On ass
     }
 #endif
 
-    if (EEPROM.getNeedUpdate())
-    {
-        EEPROM.update();
-    }
+    configuration_save();
     NRF_LOG_FINAL_FLUSH();
 
     __disable_irq();
@@ -407,7 +404,6 @@ void loop()
     Battery.run();
     Upgrade.run();
 //    protocolBreathe();    /* (Commented in Nov 2025) See the note above */
-    EEPROM.timer_update_periodically_run(1000);  // Check if it is necessary to write the eeprom every 1000 ms.
 
     LEDManager.run();
     configuration_run();
@@ -477,18 +473,8 @@ static void init_gpio(void)
 // Lest implement the reset_mcu so that if we have something to write to the flash is goin to wait for the procedure to finish.
 void reset_mcu(void)
 {
-    while (nrf_fstorage_is_busy(NULL))  // Wait until fstorage is available.
-    {
-        yield();  // Meanwhile execute tasks.
-    }
-
+    watchdog_timer.reset();
     configuration_save();
-
-    if (EEPROM.getNeedUpdate())
-    {
-        watchdog_timer.reset();
-        EEPROM.update();
-    }
 
     sd_softdevice_disable();  // Disable SD.
 
