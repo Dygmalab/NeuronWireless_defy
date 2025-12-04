@@ -33,52 +33,25 @@
 
 typedef struct PACK
 {
+#warning "Put the uint8_t variables to the respective modules' config structures."
+
     uint8_t legacy_settings[4];     /* addr. 0. A placeholder for the legacy settings header of size 4 */
     uint8_t fade_enabled;           /* addr. 0x0004 */
 
-    /* Idle LEDs */                              /* addr. 0x0005 */
     LEDManager::idleleds_conf_t idleleds;
-
-//    Qukeys qukeys;                /* addr. 0x0015 */
     kaleidoscope::plugin::Qukeys::Qukeys_config_t Qukeys;
-
-//    MouseKeys_ mouseKeys;         /* addr. 0x001A */
     kaleidoscope::plugin::MouseKeys_::MouseKeys_config_t MouseKeys;
-
-    uint8_t legacy_keyscan_interval;/* addr. 0x0024 A placeholder for the legacy keyscan_interval which is not used throughout the system */
-
-//    Brightness brightness;        /* addr. 0x0025 */
     LEDManager::brightness_conf_t brightness;
-
-//    Specification specification;  /* addr. 0x002A */  // settings_base_ = kaleidoscope::plugin::EEPROMSettings::requestSlice((sizeof(specifications_left_side)*2)); //multiply by 2
     FirmwareVersion::device_spec_t device_spec;
-
-    uint8_t bat_saving_mode;        /* addr. 0x007A */  // settings_saving_ = ::EEPROMSettings.requestSlice(sizeof(saving_mode));
-
-//    Ble_flash_data ble_flash_data;/* addr. 0x007B */  // flash_base_addr = kaleidoscope::plugin::EEPROMSettings::requestSlice(sizeof(ble_flash_data));
+    uint8_t bat_saving_mode;
     BleManager::connections_config_t ble_connections;
-
-//    uint8_t power_rf;             /* addr. 0x0165 */  // settings_base_ = kaleidoscope::plugin::EEPROMSettings::requestSlice(sizeof(power_rf));
     RadioManager::rf_config_t rf;
-
-//    Keymap keymap;                /* addr. 0x0166 */  // keymap_base_ = ::EEPROMSettings.requestSlice(max_layers_ * Runtime.device().numKeys() * 2);
     kaleidoscope::plugin::EEPROMKeymap::keymap_config_t keymap;
-
-//    Palette palette;              /* addr. 0x07A6 */  // palette_memory_pos = ::EEPROMSettings.requestSlice( palette_color_cnt * color_size );
     LEDPaletteRGBW::palette_config_t palette;
-
-//    Colormap colormap;            /* addr. 0x07E6 */  //colormap_memory_pos = ::EEPROMSettings.requestSlice( colormap_memory_size );
     LEDLayers::colormap_config_t colormap;
-
-//    Superkeys superkeys;          /* addr. 0x0B60 */  // storage_base_ = ::EEPROMSettings.requestSlice(size + 8);
     kaleidoscope::plugin::KeyRoleManager::keyrole_config_t keyrole;
     kaleidoscope::plugin::SuperkeysHandler::superkey_config_t superkey;
-
-//    Macros macros;                /* addr. 0x0F68 */  // storage_base_ = ::EEPROMSettings.requestSlice(size);
     kaleidoscope::plugin::DynamicMacros::macros_config_t macros;
-
-#warning "Test"
-    uint8_t last_item;
 } config_cache_t;
 
 static config_cache_t config_cache;
@@ -151,31 +124,8 @@ static result_t _cfg_item_request_cb( ConfigManager::cfg_item_type_t item_type, 
     return RESULT_OK;
 }
 
-#warning "Test"
-#define GET_OFFSET( item_ptr )  ( (uint32_t)item_ptr - (uint32_t)&config_cache )
-
 static result_t _cfg_item_request_kbdmem_cb( kbdmem_item_type_t item_type, const void ** pp_item )
 {
-    volatile uint32_t legacy_settings = GET_OFFSET( config_cache.legacy_settings );
-    volatile uint32_t fade_enabled = GET_OFFSET( &config_cache.fade_enabled );
-    volatile uint32_t idleleds = GET_OFFSET( &config_cache.idleleds );
-    volatile uint32_t qukeys = GET_OFFSET( &config_cache.Qukeys );
-    volatile uint32_t mousekeys = GET_OFFSET( &config_cache.MouseKeys );
-    volatile uint32_t brightness = GET_OFFSET( &config_cache.brightness );
-    volatile uint32_t device_spec = GET_OFFSET( &config_cache.device_spec );
-    volatile uint32_t bat_saving_mode = GET_OFFSET( &config_cache.bat_saving_mode );
-    volatile uint32_t ble_connections = GET_OFFSET( &config_cache.ble_connections );
-    volatile uint32_t rf = GET_OFFSET( &config_cache.rf );
-    volatile uint32_t keymap = GET_OFFSET( &config_cache.keymap );
-    volatile uint32_t palette = GET_OFFSET( &config_cache.palette );
-    volatile uint32_t colormap = GET_OFFSET( &config_cache.colormap );
-    volatile uint32_t keyrole = GET_OFFSET( &config_cache.keyrole );
-    volatile uint32_t superkey = GET_OFFSET( &config_cache.superkey );
-    volatile uint32_t macros = GET_OFFSET( &config_cache.macros );
-
-    volatile uint32_t last_item = GET_OFFSET( &config_cache.last_item );
-
-
     switch( item_type )
     {
         case KBDMEM_ITEM_TYPE_QUKEYS:
