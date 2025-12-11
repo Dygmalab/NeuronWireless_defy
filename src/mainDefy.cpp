@@ -50,7 +50,7 @@ extern "C"
 #ifdef __cplusplus
 }
 #endif
-//#include "Arduino.h"
+#include "Arduino.h"
 #include "EEPROM.h"
 #include "Watchdog_timer.h"
 #include "common.h"
