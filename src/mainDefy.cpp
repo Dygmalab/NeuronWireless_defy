@@ -315,7 +315,7 @@ void yield(void);
 static result_t LEDManager_init(void)
 {
     result_t result = RESULT_ERR;
-    LEDManager::LEDManager_config_t config;
+    LEDManager::LEDManager_init_config_t config;
 
     config.p_LEDPalette = &LEDPaletteRGBW;
     config.p_LEDDevice_list = &LEDDevice_list;

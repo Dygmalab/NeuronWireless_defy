@@ -16,6 +16,7 @@
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "Battery.h"
 #include "Ble_manager.h"
 #include "configuration.h"
 #include "Config_manager.h"
@@ -33,17 +34,11 @@
 
 typedef struct PACK __attribute__((aligned(4)))
 {
-#warning "Put the uint8_t variables to the respective modules' config structures."
-
-    uint8_t legacy_settings[4];     /* addr. 0. A placeholder for the legacy settings header of size 4 */
-    uint8_t fade_enabled;           /* addr. 0x0004 */
-
-    LEDManager::idleleds_conf_t idleleds;
+    LEDManager::ledmanager_conf_t ledmanager;
     kaleidoscope::plugin::Qukeys::Qukeys_config_t Qukeys;
     kaleidoscope::plugin::MouseKeys_::MouseKeys_config_t MouseKeys;
-    LEDManager::brightness_conf_t brightness;
     FirmwareVersion::device_spec_t device_spec;
-    uint8_t bat_saving_mode;
+    Battery::battery_conf_t battery;
     BleManager::connections_config_t ble_connections;
     RadioManager::rf_config_t rf;
     kaleidoscope::plugin::EEPROMKeymap::keymap_config_t keymap;
@@ -66,21 +61,9 @@ static result_t _cfg_item_request_cb( ConfigManager::cfg_item_type_t item_type, 
 
             break;
 
-        case ConfigManager::CFG_ITEM_TYPE_LEDS_FADE_EFFECT:
+        case ConfigManager::CFG_ITEM_TYPE_LEDS_LEDMANAGER:
 
-            *pp_item = &config_cache.fade_enabled;
-
-            break;
-
-        case ConfigManager::CFG_ITEM_TYPE_LEDS_IDLELEDS:
-
-            *pp_item = &config_cache.idleleds;
-
-            break;
-
-        case ConfigManager::CFG_ITEM_TYPE_LEDS_BRIGHTNESS:
-
-            *pp_item = &config_cache.brightness;
+            *pp_item = &config_cache.ledmanager;
 
             break;
 
@@ -96,9 +79,9 @@ static result_t _cfg_item_request_cb( ConfigManager::cfg_item_type_t item_type, 
 
             break;
 
-        case ConfigManager::CFG_ITEM_TYPE_BAT_SAVING_MODE:
+        case ConfigManager::CFG_ITEM_TYPE_BATTERY:
 
-            *pp_item = &config_cache.bat_saving_mode;
+            *pp_item = &config_cache.battery;
 
             break;
 
