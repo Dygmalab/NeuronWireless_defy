@@ -18,7 +18,7 @@
 
 #pragma once
 
-#include "middleware.h"
+#include "dl_middleware.h"
 
 extern result_t configuration_init( void );
 extern void configuration_save( void );
