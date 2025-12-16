@@ -64,6 +64,10 @@
     #error "You should not select more than one flag at a time."
 #endif
 
+#define BSP_SPI_PORT_SPI0    0
+#define BSP_SPI_PORT_SPI1    1
+#define BSP_SPI_PORT_SPI2    1
+
 #define TWI_MASTER_SCL_PIN   5
 #define TWI_MASTER_SDA_PIN   4
 #define TWI_MASTER_FLASH_CLK NRF_TWIM_FREQ_100K  /* flashing doesn't work reliably at higher clock speeds */
@@ -77,6 +81,16 @@
 
     #define BTN_RESET NRF_GPIO_PIN_MAP(0, 18)  /* LOW activated. */
     #define BTN_BOOT  NRF_GPIO_PIN_MAP(0, 15)  /* LOW activated. */
+
+    #define BSP_SPI1_MISO   NRF_GPIO_PIN_MAP(0, 0)
+    #define BSP_SPI1_MOSI   NRF_GPIO_PIN_MAP(0, 20)
+    #define BSP_SPI1_CLK    NRF_GPIO_PIN_MAP(0, 9)
+    #define BSP_SPI1_CS     NRF_GPIO_PIN_MAP(0, 10)
+
+    #define BSP_SPI2_MISO   NRF_GPIO_PIN_MAP(1, 9)
+    #define BSP_SPI2_MOSI   NRF_GPIO_PIN_MAP(0, 11)
+    #define BSP_SPI2_CLK    NRF_GPIO_PIN_MAP(0, 29)
+    #define BSP_SPI2_CS     NRF_GPIO_PIN_MAP(0, 2)
 #elif COMPILE_FOR_NEURON_2_HARDWARE_V1_1
     #define SIDE_NRESET_1 NRF_GPIO_PIN_MAP(0, 28)  /* nRESET signal OUT to keyboard side 1; HIGH = running, LOW = reset */
     #define SIDE_NRESET_2 NRF_GPIO_PIN_MAP(0, 29)  /* nRESET signal OUT to keyboard side 2; HIGH = running, LOW = reset */
@@ -86,6 +100,16 @@
 
     #define BTN_RESET NRF_GPIO_PIN_MAP(0, 18)  /* LOW activated. */
     #define BTN_BOOT  NRF_GPIO_PIN_MAP(0, 15)  /* LOW activated. */
+
+    #define BSP_SPI1_MISO   NRF_GPIO_PIN_MAP(0, 0)
+    #define BSP_SPI1_MOSI   NRF_GPIO_PIN_MAP(0, 20)
+    #define BSP_SPI1_CLK    NRF_GPIO_PIN_MAP(0, 17)
+    #define BSP_SPI1_CS     NRF_GPIO_PIN_MAP(0, 3)
+
+    #define BSP_SPI2_MISO   NRF_GPIO_PIN_MAP(1, 9)
+    #define BSP_SPI2_MOSI   NRF_GPIO_PIN_MAP(0, 11)
+    #define BSP_SPI2_CLK    NRF_GPIO_PIN_MAP(0, 1)
+    #define BSP_SPI2_CS     NRF_GPIO_PIN_MAP(0, 2)
 #elif COMPILE_FOR_DEBUG_BOARD_HARDWARE_V1_0
     #define SIDE_NRESET_1 NRF_GPIO_PIN_MAP(0, 17)  /* nRESET signal OUT to keyboard side 1; HIGH = running, LOW = reset */
     #define SIDE_NRESET_2 NRF_GPIO_PIN_MAP(1, 1)   /* nRESET signal OUT to keyboard side 2; HIGH = running, LOW = reset */
@@ -96,6 +120,16 @@
 
     #define BTN_RESET      NRF_GPIO_PIN_MAP(0, 18)  /* LOW activated. */
     #define BTN_BOOT       NRF_GPIO_PIN_MAP(0, 15)  /* LOW activated. */
+
+    #define BSP_SPI1_MISO   NRF_GPIO_PIN_MAP(1, 0)
+    #define BSP_SPI1_MOSI   NRF_GPIO_PIN_MAP(0, 20)
+    #define BSP_SPI1_CLK    NRF_GPIO_PIN_MAP(0, 9)
+    #define BSP_SPI1_CS     NRF_GPIO_PIN_MAP(0, 10)
+
+    #define BSP_SPI2_MISO   NRF_GPIO_PIN_MAP(1, 9)
+    #define BSP_SPI2_MOSI   NRF_GPIO_PIN_MAP(0, 11)
+    #define BSP_SPI2_CLK    NRF_GPIO_PIN_MAP(0, 29)
+    #define BSP_SPI2_CS     NRF_GPIO_PIN_MAP(0, 2)
 #elif COMPILE_FOR_DEBUG_BOARD_HARDWARE_V1_1
     #define SIDE_NRESET_1 NRF_GPIO_PIN_MAP(0, 28)  /* nRESET signal OUT to keyboard side 1; HIGH = running, LOW = reset */
     #define SIDE_NRESET_2 NRF_GPIO_PIN_MAP(0, 29)  /* nRESET signal OUT to keyboard side 2; HIGH = running, LOW = reset */
@@ -106,6 +140,16 @@
 
     #define BTN_RESET      NRF_GPIO_PIN_MAP(0, 18)  /* LOW activated. */
     #define BTN_BOOT       NRF_GPIO_PIN_MAP(0, 15)  /* LOW activated. */
+
+    #define BSP_SPI1_MISO   NRF_GPIO_PIN_MAP(1, 0)
+    #define BSP_SPI1_MOSI   NRF_GPIO_PIN_MAP(0, 20)
+    #define BSP_SPI1_CLK    NRF_GPIO_PIN_MAP(0, 17)
+    #define BSP_SPI1_CS     NRF_GPIO_PIN_MAP(0, 3)
+
+    #define BSP_SPI2_MISO   NRF_GPIO_PIN_MAP(1, 9)
+    #define BSP_SPI2_MOSI   NRF_GPIO_PIN_MAP(0, 11)
+    #define BSP_SPI2_CLK    NRF_GPIO_PIN_MAP(1, 1)
+    #define BSP_SPI2_CS     NRF_GPIO_PIN_MAP(0, 2)
 #elif COMPILE_FOR_DEBUG_BOARD_HARDWARE_V1_2
     #define SIDE_NRESET_1 NRF_GPIO_PIN_MAP(0, 28)  /* nRESET signal OUT to keyboard side 1; HIGH = running, LOW = reset */
     #define SIDE_NRESET_2 NRF_GPIO_PIN_MAP(0, 29)  /* nRESET signal OUT to keyboard side 2; HIGH = running, LOW = reset */
@@ -115,6 +159,16 @@
 
     #define BTN_RESET NRF_GPIO_PIN_MAP(0, 18)  /* LOW activated. */
     #define BTN_BOOT  NRF_GPIO_PIN_MAP(0, 15)  /* LOW activated. */
+
+    #define BSP_SPI1_MISO   NRF_GPIO_PIN_MAP(0, 0)
+    #define BSP_SPI1_MOSI   NRF_GPIO_PIN_MAP(0, 20)
+    #define BSP_SPI1_CLK    NRF_GPIO_PIN_MAP(0, 17)
+    #define BSP_SPI1_CS     NRF_GPIO_PIN_MAP(0, 3)
+
+    #define BSP_SPI2_MISO   NRF_GPIO_PIN_MAP(1, 9)
+    #define BSP_SPI2_MOSI   NRF_GPIO_PIN_MAP(0, 11)
+    #define BSP_SPI2_CLK    NRF_GPIO_PIN_MAP(0, 1)
+    #define BSP_SPI2_CS     NRF_GPIO_PIN_MAP(0, 2)
 #endif
 
 /* Only for DEBUG */
