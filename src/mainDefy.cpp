@@ -449,11 +449,11 @@ static void init_gpio(void)
     nrf_gpio_cfg_input(BTN_RESET, NRF_GPIO_PIN_PULLUP);
     nrf_gpio_cfg_input(BTN_BOOT, NRF_GPIO_PIN_PULLUP);
 
-    nrf_gpio_cfg_output(SIDE_NRESET_1);
-    nrf_gpio_cfg_output(SIDE_NRESET_2);
+    nrf_gpio_cfg_output(BSP_GPIO_nRST1);
+    nrf_gpio_cfg_output(BSP_GPIO_nRST2);
 
-    nrf_gpio_pin_write(SIDE_NRESET_1, 0);
-    nrf_gpio_pin_write(SIDE_NRESET_2, 0);
+    nrf_gpio_pin_write(BSP_GPIO_nRST1, 0);
+    nrf_gpio_pin_write(BSP_GPIO_nRST2, 0);
 
 /* Only for DEBUG */
 #if (COMPILE_FOR_DEBUG_BOARD_HARDWARE_V1_0 | COMPILE_FOR_DEBUG_BOARD_HARDWARE_V1_1)
@@ -520,5 +520,45 @@ void yield(void)
     if(ble_innited() && FirmwareVersion.keyboard_is_wireless())
     {
         ble_run();
+    }
+}
+
+/************************************************************************/
+/*                     KBD Low Level Glue Functions                     */
+/************************************************************************/
+
+bool_t kbd_glue_left_wired_connected( void )
+{
+    return nrf_gpio_pin_read( BSP_GPIO_nRST2 );
+}
+
+bool_t kbd_glue_right_wired_connected( void )
+{
+    return nrf_gpio_pin_read( BSP_GPIO_nRST1 );
+}
+
+void kbd_glue_side_power_left_set( bool_t power )
+{
+    if (power == true)
+    {
+        nrf_gpio_cfg_input(BSP_GPIO_nRST2, NRF_GPIO_PIN_NOPULL);
+    }
+    else
+    {
+        nrf_gpio_cfg_output(BSP_GPIO_nRST2);
+        nrf_gpio_pin_write(BSP_GPIO_nRST2, 0);
+    }
+}
+
+void kbd_glue_side_power_right_set( bool_t power )
+{
+    if (power == true)
+    {
+        nrf_gpio_cfg_input(BSP_GPIO_nRST1, NRF_GPIO_PIN_NOPULL);
+    }
+    else
+    {
+        nrf_gpio_cfg_output(BSP_GPIO_nRST1);
+        nrf_gpio_pin_write(BSP_GPIO_nRST1, 0);
     }
 }
