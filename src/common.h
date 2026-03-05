@@ -33,6 +33,7 @@
 
 #include "stdint.h"
 #include "nrf_gpio.h"
+#include "keyboard_config.h"
 
 // clang-format off
 

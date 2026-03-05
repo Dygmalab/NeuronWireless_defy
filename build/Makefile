@@ -62,7 +62,6 @@ BSP_TARGET_BOARD = BSP_DEFY_N2
 # Target specific MCU definitions
 include $(APP_BUILD_DIR)/MakeDefsBsp.mk
 
-
 #-------------------------------------------------------------------------------
 # Include target MCU specific definitions
 #-------------------------------------------------------------------------------
@@ -172,13 +171,17 @@ INCDIR += -I$(APP_ROOT_DIR)/src/
 INCDIR += -I$(APP_ROOT_DIR)/src/version/
 
 INCDIR += -I$(LIB_ROOT_DIR)/
+INCDIR += -I$(LIB_ROOT_DIR)/Battery_manager/
+INCDIR += -I$(LIB_ROOT_DIR)/Ble_manager/
 INCDIR += -I$(LIB_ROOT_DIR)/Ble_composite_dev/
 INCDIR += -I$(LIB_ROOT_DIR)/Communications/src/
 INCDIR += -I$(LIB_ROOT_DIR)/Communications/src/device/neuron/common/
 INCDIR += -I$(LIB_ROOT_DIR)/Communications/src/device/neuron/defyN2/
 INCDIR += -I$(LIB_ROOT_DIR)/Communications/src/device/neuron/defyN2/com_models/
-INCDIR += -I$(LIB_ROOT_DIR)/Fifo_buffer/
+INCDIR += -I$(LIB_ROOT_DIR)/Config_manager/
+INCDIR += -I$(LIB_ROOT_DIR)/CRC/
 INCDIR += -I$(LIB_ROOT_DIR)/EEPROM/
+INCDIR += -I$(LIB_ROOT_DIR)/Fifo_buffer/
 INCDIR += -I$(LIB_ROOT_DIR)/NeuronLedLibrary/
 INCDIR += -I$(LIB_ROOT_DIR)/NeuronLedLibrary/effects/
 INCDIR += -I$(LIB_ROOT_DIR)/NeuronLedLibrary/layers/
@@ -194,19 +197,15 @@ INCDIR += -I$(LIB_ROOT_DIR)/Spi_slave/
 INCDIR += -I$(LIB_ROOT_DIR)/Spi_slave/link/
 INCDIR += -I$(LIB_ROOT_DIR)/Status_leds/
 INCDIR += -I$(LIB_ROOT_DIR)/Time_counter/
-INCDIR += -I$(LIB_ROOT_DIR)/Watchdog_timer/
-INCDIR += -I$(LIB_ROOT_DIR)/Wire/
 INCDIR += -I$(LIB_ROOT_DIR)/Twi_master/
 INCDIR += -I$(LIB_ROOT_DIR)/UpgradeKeyscanner/include/
 INCDIR += -I$(LIB_ROOT_DIR)/UpgradeKeyscanner/src/
-INCDIR += -I$(LIB_ROOT_DIR)/CRC/
-INCDIR += -I$(LIB_ROOT_DIR)/Battery_manager/
-INCDIR += -I$(LIB_ROOT_DIR)/Ble_manager/
-INCDIR += -I$(LIB_ROOT_DIR)/Config_manager/
 INCDIR += -I$(LIB_ROOT_DIR)/RF_manager/
 INCDIR += -I$(LIB_ROOT_DIR)/utils/Do_once/
 INCDIR += -I$(LIB_ROOT_DIR)/utils/Run_task_once/
 INCDIR += -I$(LIB_ROOT_DIR)/utils/Timer/
+INCDIR += -I$(LIB_ROOT_DIR)/Watchdog_timer/
+INCDIR += -I$(LIB_ROOT_DIR)/Wire/
 
 INCDIR += -I$(LIB_ROOT_DIR)/NRf_platform/
 INCDIR += -I$(LIB_ROOT_DIR)/NRf_platform/hal/
@@ -308,6 +307,7 @@ SRCSC += $(LIB_ROOT_DIR)/NRf_platform/middleware/halsep/hal_mcu_spi.c
 SRCSC += $(LIB_ROOT_DIR)/NRf_platform/middleware/memory/heap.c
 SRCSC += $(LIB_ROOT_DIR)/NRf_platform/middleware/memory/link_list.c
 SRCSC += $(LIB_ROOT_DIR)/NRf_platform/middleware/utils/dl_crc32.c
+SRCSC += $(LIB_ROOT_DIR)/NRf_platform/middleware/utils/dl_utils.c
 #SRCSC += $(LIB_ROOT_DIR)/NRf_platform/middleware/drivers/spi/link/spi_link_slave.c
 
 SRCSCXX += $(LIB_ROOT_DIR)/Fifo_buffer/Fifo_buffer.cpp
