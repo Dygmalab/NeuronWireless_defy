@@ -32,6 +32,7 @@
 
 
 #include "stdint.h"
+#include "nrf_gpio.h"
 
 // clang-format off
 
@@ -68,9 +69,9 @@
 #define BSP_SPI_PORT_SPI1    1
 #define BSP_SPI_PORT_SPI2    1
 
-#define TWI_MASTER_SCL_PIN   5
-#define TWI_MASTER_SDA_PIN   4
-#define TWI_MASTER_FLASH_CLK NRF_TWIM_FREQ_100K  /* flashing doesn't work reliably at higher clock speeds */
+/* TWI Port */
+#define BSP_TWI_SCL_PIN     NRF_GPIO_PIN_MAP(0, 5)
+#define BSP_TWI_SDA_PIN     NRF_GPIO_PIN_MAP(0, 4)
 
 #if COMPILE_FOR_NEURON_2_HARDWARE_V1_0
     #define SIDE_NRESET_1 NRF_GPIO_PIN_MAP(0, 17)  /* nRESET signal OUT to keyboard side 1; HIGH = running, LOW = reset */
