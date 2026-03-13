@@ -1,5 +1,5 @@
 /*
- * kaleidoscope::plugin::FirmwareVersion -- Tell the firmware version via Focus
+ * FirmwareVersion -- Provide the version and system hardware configuration
  *
  * Copyright (C) 2020  Dygma Lab S.L.
  *
@@ -18,14 +18,11 @@
 
 #pragma once
 
-#include "Kaleidoscope.h"
+#include "Arduino.h"
+#include "Communications_protocol.h"
+#include "kbd_if.h"
 
-namespace kaleidoscope
-{
-namespace plugin
-{
-
-class FirmwareVersion : public Plugin
+class FirmwareVersion
 {
   public:
     FirmwareVersion()
@@ -36,9 +33,8 @@ class FirmwareVersion : public Plugin
     uint32_t start_time_{0};
     uint32_t configuration_timeout_{0};
 
-    EventHandlerResult onFocusEvent(const char *command);
-    EventHandlerResult beforeEachCycle();
-    EventHandlerResult onSetup();
+    result_t init();
+
     uint8_t get_device_name();
     String get_left_side_chip_id();
     uint64_t get_left_side_rf_chip_id();
@@ -57,28 +53,24 @@ class FirmwareVersion : public Plugin
         Wired
     };
 
-    static Device get_layout();
-
-    struct Specifications{
+    typedef struct PACK
+    {
         uint8_t device_name;
         uint8_t configuration;
         uint8_t connection;
+        uint8_t reserve1[5];            /* Additional space to fit the legacy memory alignment */
         uint64_t rf_gateway_chip_id;
         char chip_id_rp2040[20];
+        uint8_t reserve2[4];            /* Additional space to fit the legacy memory alignment */
+    } keyscanner_spec_t;
 
-        void reset(void)
-        {
-            configuration = static_cast<uint8_t>(Device::ANSI);
-            device_name = static_cast<uint8_t>(Device::Raise2);
-            connection = static_cast<uint8_t>(Device::Wired);
-            rf_gateway_chip_id = 0;
-            for (int i = 0; i < 20 ; ++i)
-            {
-                chip_id_rp2040[i] = '0';
-            }
-        }
-    };
+    typedef struct PACK
+    {
+        keyscanner_spec_t ks_left;
+        keyscanner_spec_t ks_right;
+    } device_spec_t;
 
+    static Device get_layout();
 
     /*
      * @brief Get the connection type
@@ -86,8 +78,13 @@ class FirmwareVersion : public Plugin
      */
     static bool keyboard_is_wireless();
 
-private:
-    static uint16_t settings_base_;
+  private:
+    static const device_spec_t * p_device_spec;
+
+    kbdif_t * p_kbdif = NULL;
+    result_t kbdif_initialize(void);
+
+  private:
 
     enum request_t {
         LAYOUT,
@@ -115,9 +112,11 @@ private:
 
     static bool memory_specifications_empty;
 
+    static const kbdif_handlers_t kbdif_handlers;
+    static kbdapi_event_result_t kbdif_command_event_cb( void * p_instance, const char * p_command );
+
+    static void cfgmem_keyscanner_spec_left_save( const keyscanner_spec_t * p_spec );
+    static void cfgmem_keyscanner_spec_right_save( const keyscanner_spec_t * p_spec );
 };
 
-}   // namespace plugin
-}   // namespace kaleidoscope
-
-extern kaleidoscope::plugin::FirmwareVersion FirmwareVersion;
+extern class FirmwareVersion FirmwareVersion;

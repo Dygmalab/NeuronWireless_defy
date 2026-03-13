@@ -28,12 +28,16 @@
 #define SHORT_NAME "defy_wireless"
 
 // LED definitions
-#define KEY_MATRIX_LEDS 35
-#define UNDERGLOW_LEDS_LEFT_SIDE 53
-#define LEDS_HAND_LEFT 35
-#define UNDERGLOW_LEDS_RIGHT_SIDE 53
-#define LEDS_HAND_RIGHT 35
-#define NEURON_LED 2
+#define APP_LEDS_BL_LEFT_CNT 35     /* The project's number of left-side backlight leds */
+#define APP_LEDS_UG_LEFT_CNT 53     /* The project's number of left-side underglow leds */
+#define APP_LEDS_BL_RIGHT_CNT 35    /* The project's number of right-side backlight leds */
+#define APP_LEDS_UG_RIGHT_CNT 53    /* The project's number of right-side underglow leds */
+#define APP_LEDS_NEURON_CNT 2       /* The project's number of neuron leds */
+
+#define APP_LEDS_BL_CNT     (APP_LEDS_BL_LEFT_CNT + APP_LEDS_BL_RIGHT_CNT)  /* The total number of backlight leds */
+#define APP_LEDS_UG_CNT     (APP_LEDS_UG_LEFT_CNT + APP_LEDS_UG_RIGHT_CNT)  /* The total number of underglow leds */
+
+#define APP_LEDS_CNT (APP_LEDS_BL_CNT + APP_LEDS_UG_CNT + APP_LEDS_NEURON_CNT)  /* The total number of project's leds */
 
 #define LED_MAP {                                                                                                               \
     /*left side - 33 keys includes LP: key 19 is missing for ANSI layout*/                                                      \
@@ -63,6 +67,12 @@
     21, 22, 23, 24, 25, 26, no_led, no_led, no_led, no_led, 26 + key_matrix_leds, 25 + key_matrix_leds, 24 + key_matrix_leds, 23 + key_matrix_leds, 22 + key_matrix_leds,                                 \
     21 + key_matrix_leds,                                                                                                                                                                                 \
     27, 28, 29, 30, 31, 32, 33, 34, 34 + key_matrix_leds, 33 + key_matrix_leds, 32 + key_matrix_leds, 31 + key_matrix_leds, 30 + key_matrix_leds, 29 + key_matrix_leds, 28 + key_matrix_leds, 27 + key_matrix_leds}
+
+// Layers definition
+#define APP_LAYERS_CNT    10
+
+// Macros definition
+#define APP_MACROS_MEMORY_SIZE  2048
 
 // Matrix definitions
 #define MATRIX_ROWS 5
