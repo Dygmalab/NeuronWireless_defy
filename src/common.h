@@ -201,5 +201,9 @@
     #define BTN_SYSTEM_OFF BTN1  /* Set the request for system OFF. */
 #endif
 
+    /* Idle LEDs */
+    #define DEFAULT_TRUE_SLEEP_TIME_MS          (10 * 60 * 1000)    /* 10 minutes */
+    #define DEFAULT_LEDS_OFF_WIRED_TIME_MS      (5 * 60 * 1000)     /*  5 minutes */
+    #define DEFAULT_LEDS_OFF_WIRELESS_TIME_MS   (1 * 60 * 1000)     /*  1 minute  */
 
 #endif  /* __COMMON_H__ */
