@@ -326,6 +326,24 @@ static result_t LEDManager_init(void)
     return result;
 }
 
+static result_t _kbdapi_init( void )
+{
+    result_t result = RESULT_ERR;
+    kbdapi_config_t config;
+
+    config.kbdpwrif.sleep_postpone_fn = mcu_sleep_postpone;
+
+    config.kbdtimif.get_system_ms_fn = timer_counter_get_millis;
+    config.kbdtimif.set_ms_fn = timer_set_ms;
+    config.kbdtimif.check_fn = timer_check;
+
+    result = kbdapi_init( &config );
+    EXIT_IF_ERR( result, "kbdapi_init failed!" );
+
+_EXIT:
+    return result;
+}
+
 void setup(void)
 {
     result_t result;
@@ -356,8 +374,8 @@ void setup(void)
     Communications.init();
 
     // Keyboard
-    result = kbdapi_init();
-    ASSERT_DYGMA( result == RESULT_OK, "kbdapi_init failed!" );
+    result = _kbdapi_init();
+    ASSERT_DYGMA( result == RESULT_OK, "_kbdapi_init failed!" );
 
     // Firmware version
     result = FirmwareVersion.init();
@@ -561,4 +579,11 @@ void kbd_glue_side_power_right_set( bool_t power )
         nrf_gpio_cfg_output(BSP_GPIO_nRST1);
         nrf_gpio_pin_write(BSP_GPIO_nRST1, 0);
     }
+}
+
+void kbd_glue_status_leds_init( void )
+{
+    /* NOTE: We currently do not use the status leds to save battery power */
+//    status_leds.init();
+//    status_leds.static_green(NEURON_LED_BRIGHTNESS);
 }
