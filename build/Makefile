@@ -4,7 +4,7 @@
 
 APP_NAME = NeuronWireless_defy
 
-#-------------------------------------------------------------------------------
+#-----------------------f--------------------------------------------------------
 # Common, platform and project root directories
 #-------------------------------------------------------------------------------
 
@@ -431,6 +431,7 @@ SRCSCXX += $(KALEIDOSCOPE_ADAPTER_ROOT_DIR)/plugins/KbdInterface.cpp
 SRCSCXX += $(KALEIDOSCOPE_ADAPTER_ROOT_DIR)/plugins/LEDControlDygma.cpp
 SRCSCXX += $(KALEIDOSCOPE_ADAPTER_ROOT_DIR)/plugins/MouseKeysDygma.cpp
 SRCSCXX += $(KALEIDOSCOPE_ADAPTER_ROOT_DIR)/plugins/OneShotDygma.cpp
+SRCSCXX += $(KALEIDOSCOPE_ADAPTER_ROOT_DIR)/plugins/OverlayKeyDygma.cpp
 SRCSCXX += $(KALEIDOSCOPE_ADAPTER_ROOT_DIR)/plugins/QukeysDygma.cpp
 
 # Kaleidoscope
