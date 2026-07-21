@@ -47,6 +47,7 @@ typedef struct PACK __attribute__((aligned(4)))
     kaleidoscope::plugin::KeyRoleManager::keyrole_config_t keyrole;
     kaleidoscope::plugin::SuperkeysHandler::superkey_config_t superkey;
     kaleidoscope::plugin::DynamicMacros::macros_config_t macros;
+    LEDManager::caps_lock_indicator_conf_t caps_lock_indicator;
 } config_cache_t;
 
 static config_cache_t config_cache;
@@ -76,6 +77,12 @@ static result_t _cfg_item_request_cb( ConfigManager::cfg_item_type_t item_type, 
         case ConfigManager::CFG_ITEM_TYPE_LEDS_COLORMAP:
 
             *pp_item = &config_cache.colormap;
+
+            break;
+
+        case ConfigManager::CFG_ITEM_TYPE_LEDS_CAPS_LOCK_INDICATOR:
+
+            *pp_item = &config_cache.caps_lock_indicator;
 
             break;
 
