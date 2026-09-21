@@ -76,6 +76,7 @@ extern "C"
 
 #include "Kaleidoscope-OneShot.h"
 #include "Kaleidoscope-Qukeys.h"
+#include "kaleidoscope/plugin/OverlayKeyDygma.h"
 
 // #include "LED-CapsLockLight.h"
 
@@ -349,6 +350,8 @@ static kaleidoscope::plugin::LEDStalkerDefy stalkerDefy{};
 KALEIDOSCOPE_INIT_PLUGINS
 (
     EEPROMSettings,
+    /*Overlay key plugin - must precede the key-handling plugins to consume OVERLAY events first*/
+    OverlayKey,
     EEPROMKeymap, FirmwareVersion, FocusSettingsCommand, FocusEEPROMCommand, Upgrade,keyRoleManager,
     LEDControl, FocusLEDCommand,
     LEDPaletteThemeDefy, ColormapEffectDefy,
