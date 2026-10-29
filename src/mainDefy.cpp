@@ -77,6 +77,9 @@ extern "C"
 #include "Kaleidoscope-OneShot.h"
 #include "Kaleidoscope-Qukeys.h"
 #include "kaleidoscope/plugin/OverlayKeyDygma.h"
+#include "kaleidoscope/plugin/AutoshiftDygma.h"
+#include "kaleidoscope/plugin/CapsWordDygma.h"
+#include "kaleidoscope/plugin/CombosDygma.h"
 
 // #include "LED-CapsLockLight.h"
 
@@ -350,9 +353,20 @@ static kaleidoscope::plugin::LEDStalkerDefy stalkerDefy{};
 KALEIDOSCOPE_INIT_PLUGINS
 (
     EEPROMSettings,
+    /*Combos goes before every key-handling plugin: it matches on physical
+      position, so it must see raw keyswitch events before any plugin can
+      consume them -- including OverlayKey and Autoshift, which own their own
+      ranges.*/
+    Combos,
     /*Overlay key plugin - must precede the key-handling plugins to consume OVERLAY events first*/
     OverlayKey,
-    EEPROMKeymap, FirmwareVersion, FocusSettingsCommand, FocusEEPROMCommand, Upgrade,keyRoleManager,
+    EEPROMKeymap, FirmwareVersion, FocusSettingsCommand, FocusEEPROMCommand, Upgrade,
+    /*CapsWord trigger and Autoshift - must precede keyRoleManager so their own
+      ranges are consumed before the Qukeys queue and the SuperKeys timeline see
+      them. That keeps them out of both delay stages and of the timeline's
+      double delivery.*/
+    CapsWordTrigger, Autoshift,
+    keyRoleManager,
     LEDControl, FocusLEDCommand,
     LEDPaletteThemeDefy, ColormapEffectDefy,
     LEDRainbowWaveEffectDefy, LEDRainbowEffectDefy, stalkerDefy, solidRedDefy,
@@ -361,7 +375,10 @@ KALEIDOSCOPE_INIT_PLUGINS
     /*SideFlash,*/ Focus, MouseKeys, OneShot, LayerFocus,
     HostPowerManagement,Battery,
     /*BLE*/
-    RadioManager, _BleManager
+    RadioManager, _BleManager,
+    /*CapsWord shift - must stay last, so every plugin that matches keys by their
+      exact raw value sees the key before SHIFT_HELD is added to it*/
+    CapsWordShift
 );
 // clang-format on
 // End Kaleidoscope
@@ -402,6 +419,10 @@ void setup(void)
     //SuperkeysHandler.setup(); // Initialize the SuperkeysHandler plugin.
     keyRoleManager.setup_superkeys(MAX_LAYERS);   // Initialize the keyRoleManager plugin.
     DynamicMacros.reserve_storage(2048);
+    // New blocks go after every existing slice, so no stored offset moves
+    Combos.reserveStorage();
+    Autoshift.reserveStorage();
+    CapsWordTrigger.reserveStorage();
 
     // Keep the HID begin after the Kaleidoscope setup.
     HID().begin();

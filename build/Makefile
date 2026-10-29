@@ -380,6 +380,9 @@ SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/device/dygma/keyboardManage
 
 SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/key_events.cpp
 SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/layers.cpp
+SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/plugin/AutoshiftDygma.cpp
+SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/plugin/CapsWordDygma.cpp
+SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/plugin/CombosDygma.cpp
 SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/plugin/DynamicMacros.cpp
 
 SRCSCXX += $(KALEIDOSCOPE_ROOT_DIR)/src/kaleidoscope/plugin/SuperkeysHandler.cpp
