@@ -3843,7 +3843,7 @@
     Here we reserve two pages from the bootloader to be used by the EEPROM class.
 */
 #ifndef FDS_VIRTUAL_PAGES_RESERVED
-#define FDS_VIRTUAL_PAGES_RESERVED 2
+#define FDS_VIRTUAL_PAGES_RESERVED 0
 #endif
 
 // </h>

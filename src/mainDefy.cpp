@@ -20,26 +20,13 @@
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <stdbool.h>
-#include <stddef.h>
-#include <stdint.h>
-
 #ifdef __cplusplus
 extern "C"
 {
 #endif
 
-//#include "nordic_common.h"
-//#include "nrf.h"
-//#include "nrf_assert.h"
-//#include "nrf_drv_clock.h"
-//#include "nrf_drv_power.h"
-#include "nrf_fstorage.h"
+//#include "nrf_fstorage.h"
 #include "nrf_sdm.h"
-
-//#include "app_error.h"
-//#include "app_timer.h"
-//#include "nrf_delay.h"
 #include "nrf_gpio.h"
 
 //// UART debug log
@@ -51,7 +38,6 @@ extern "C"
 }
 #endif
 #include "Arduino.h"
-#include "EEPROM.h"
 #include "Watchdog_timer.h"
 #include "common.h"
 
@@ -103,8 +89,9 @@ extern "C"
 #include "keyboard_api.h"
 #include "Battery.h"
 #include "Ble_manager.h"
-#include "configuration.h"
+#include "Config_manager.h"
 #include "DynamicMacrosDygma.h"
+#include "Kbd_manager.h"
 #include "LEDDevice-Remote.h"
 #include "LEDManager.h"
 #include "LEDPaletteRGBW.h"
@@ -184,7 +171,6 @@ void app_error_fault_handler(uint32_t id, uint32_t pc, uint32_t info)  // On ass
     }
 #endif
 
-    configuration_save();
     NRF_LOG_FINAL_FLUSH();
 
     __disable_irq();
@@ -309,7 +295,6 @@ void hostPowerManagementEventHandler(kaleidoscope::plugin::HostPowerManagement::
 
 static void gpio_output_voltage_setup(void);
 static void init_gpio(void);
-void reset_mcu(void);
 void yield(void);
 
 static result_t LEDManager_init(void)
@@ -367,8 +352,8 @@ void setup(void)
     NRF_LOG_FLUSH();
 
     // Initialize the System Configuration
-    result = configuration_init();
-    ASSERT_DYGMA( result == RESULT_OK, "configuration_init failed!" );
+    result = ConfigManager.init();
+    ASSERT_DYGMA( result == RESULT_OK, "ConfigManager.init failed" );
 
     // Initialize the communications before Kaleidoscope to make sure the correct order of the incoming message processing
     Communications.init();
@@ -376,6 +361,10 @@ void setup(void)
     // Keyboard
     result = _kbdapi_init();
     ASSERT_DYGMA( result == RESULT_OK, "_kbdapi_init failed!" );
+
+    // Keyboard manager
+    result = kbdManager.init();
+    ASSERT_DYGMA( result == RESULT_OK, "Kbd_manager.init failed!" );
 
     // Firmware version
     result = FirmwareVersion.init();
@@ -424,7 +413,7 @@ void loop()
 //    protocolBreathe();    /* (Commented in Nov 2025) See the note above */
 
     LEDManager.run();
-    configuration_run();
+    ConfigManager.run();
 
     NRF_LOG_PROCESS(); // Process deferred logs (send it to the host computer via UART).
 
@@ -492,7 +481,6 @@ static void init_gpio(void)
 void reset_mcu(void)
 {
     watchdog_timer.reset();
-    configuration_save();
 
     sd_softdevice_disable();  // Disable SD.
 
@@ -524,7 +512,7 @@ void yield(void)
     TinyUSB_Device_FlushCDC();
 #endif
 
-    if(ble_connected())
+    if(BleManager.is_connected())
     {
         RawHID.flush();
     }
@@ -535,9 +523,13 @@ void yield(void)
     TinyUSB_Device_Task();
 #endif
 
-    if(ble_innited() && FirmwareVersion.keyboard_is_wireless())
+    /*
+     * The BleManager.run() is still needed to be run in the yield function due to the modules like "Macros" still using blocking
+     * delays which internally call the yield for their proper functionality
+     */
+    if( FirmwareVersion.keyboard_is_wireless() == true && BleManager.is_enabled() == true )
     {
-        ble_run();
+        BleManager.run();
     }
 }
 

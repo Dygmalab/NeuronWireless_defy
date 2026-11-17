@@ -76,7 +76,7 @@ result_t FirmwareVersion::init()
     result = kbdif_initialize();
     EXIT_IF_ERR( result, "kbdif_initialize failed" );
 
-    result = ConfigManager.config_item_request( ConfigManager::CFG_ITEM_TYPE_DEVICE_SPEC, (const void **)&p_device_spec );
+    result = ConfigManager.config_item_request( (const void **)&p_device_spec, sizeof( device_spec_t ) );
     EXIT_IF_ERR( result, "ConfigManager.config_item_request failed" );
 
     // because we have two specification structures.
