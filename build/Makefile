@@ -552,10 +552,10 @@ endif
 endif
 
 
-$(BINARY_OUTPUT): $(OBJSC) $(OBJSCXX) $(OBJSA) $(OBJSa)
+$(BINARY_OUTPUT): $(OBJSC) $(OBJSC_DBG) $(OBJSCXX) $(OBJSCXX_DBG) $(OBJSA) $(OBJSa)
 	@echo "Compiling done."
 	@echo "Linking ..."
-	$(CXX) -Xlinker -Map -Xlinker $@.map $(LFLAGS) -o $@.elf $(OBJSC) $(OBJSCXX) $(OBJSA) $(OBJSa) $(LIBS)
+	$(CXX) -Xlinker -Map -Xlinker $@.map $(LFLAGS) -o $@.elf $(OBJSC) $(OBJSC_DBG) $(OBJSCXX) $(OBJSCXX_DBG) $(OBJSA) $(OBJSa) $(LIBS)
 #	$(OBJDUMP) -D -S $@.elf > $@.lst
 	@echo "Linking done."
 	$(SIZE) -A $@.elf

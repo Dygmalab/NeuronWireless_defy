@@ -20,9 +20,11 @@ INCDIR =
 
 # C sources
 SRCSC =
+SRCSC_DBG =
 
 # C++ sources
 SRCSCXX =
+SRCSCXX_DBG =
 
 # Assembler sources
 SRCSA =

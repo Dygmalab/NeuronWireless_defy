@@ -40,7 +40,9 @@ DDD     = ddd
 
 # Derive target and object file names from source file lists
 OBJSC         = $(patsubst %.c, $(OBJDIR)/%.o, $(notdir $(SRCSC)))
+OBJSC_DBG     = $(patsubst %.c, $(OBJDIR)/%.o, $(notdir $(SRCSC_DBG)))
 OBJSCXX       = $(patsubst %.cpp, $(OBJDIR)/%.o, $(notdir $(SRCSCXX)))
+OBJSCXX_DBG   = $(patsubst %.cpp, $(OBJDIR)/%.o, $(notdir $(SRCSCXX_DBG)))
 OBJSC_PROF    = $(patsubst %.c, $(OBJDIR)/%.o, $(notdir $(SRCSC_PROF)))
 OBJSCXX_PROF  = $(patsubst %.cpp, $(OBJDIR)/%.o, $(notdir $(SRCSCXX_PROF)))
 OBJSA         = $(patsubst %.S, $(OBJDIR)/%.o, $(notdir $(SRCSA)))
@@ -80,12 +82,28 @@ $(MAINDEP): $(OBJDIR)
 	    echo -e \\t'$$(CC) -c $$(CFLAGS) -o $$@ '"$$SRC"; \
 	    echo -include $(OBJDIR)/$${BASE%.*}.dep; \
 	done > $(MAINDEP)
+	@for SRC in $(SRCSC_DBG); do \
+	    BASE=$${SRC##*/}; \
+	    echo $(OBJDIR)/$${BASE%.*}.dep: $$SRC; \
+	    echo -e \\t'@$$(CC) -MM -MG $$(CFLAGS) $$< | sed -e "s,[^: ]*:,$$@:," | sed -e "s,$$(EXCLDEPS),  ,g" > $$@'; \
+	    echo $(OBJDIR)/$${BASE%.*}.o: $(OBJDIR)/$${BASE%.*}.dep; \
+	    echo -e \\t'$$(CC) -c $$(CFLAGS) -O0 -o $$@ '"$$SRC"; \
+	    echo -include $(OBJDIR)/$${BASE%.*}.dep; \
+	done >> $(MAINDEP)
 	@for SRC in $(SRCSCXX); do \
 	    BASE=$${SRC##*/}; \
 	    echo $(OBJDIR)/$${BASE%.*}.dep: $$SRC; \
 	    echo -e \\t'@$$(CXX) -MM -MG $$(CXXFLAGS) $$< | sed -e "s,[^: ]*:,$$@:," | sed -e "s,$$(EXCLDEPS),  ,g" > $$@'; \
 	    echo $(OBJDIR)/$${BASE%.*}.o: $(OBJDIR)/$${BASE%.*}.dep; \
 	    echo -e \\t'$$(CXX) -c $$(CXXFLAGS) -o $$@ '"$$SRC"; \
+	    echo -include $(OBJDIR)/$${BASE%.*}.dep; \
+	done >> $(MAINDEP)
+	@for SRC in $(SRCSCXX_DBG); do \
+	    BASE=$${SRC##*/}; \
+	    echo $(OBJDIR)/$${BASE%.*}.dep: $$SRC; \
+	    echo -e \\t'@$$(CXX) -MM -MG $$(CXXFLAGS) $$< | sed -e "s,[^: ]*:,$$@:," | sed -e "s,$$(EXCLDEPS),  ,g" > $$@'; \
+	    echo $(OBJDIR)/$${BASE%.*}.o: $(OBJDIR)/$${BASE%.*}.dep; \
+	    echo -e \\t'$$(CXX) -c $$(CXXFLAGS) -O0 -o $$@ '"$$SRC"; \
 	    echo -include $(OBJDIR)/$${BASE%.*}.dep; \
 	done >> $(MAINDEP)
 	@for SRC in $(SRCSA); do \
