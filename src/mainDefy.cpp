@@ -355,12 +355,12 @@ void setup(void)
     result = ConfigManager.init();
     ASSERT_DYGMA( result == RESULT_OK, "ConfigManager.init failed" );
 
-    // Initialize the communications before Kaleidoscope to make sure the correct order of the incoming message processing
-    Communications.init();
-
     // Keyboard
     result = _kbdapi_init();
     ASSERT_DYGMA( result == RESULT_OK, "_kbdapi_init failed!" );
+
+    // Communications
+    Communications.init();
 
     // Keyboard manager
     result = kbdManager.init();
